@@ -11,22 +11,17 @@ interface SubmitProps {
 
 interface LoginProps {
   login: (value: SubmitProps) => Promise<void>;
-  onError: (error: Error | null) => void;
+  isLoading: boolean;
 }
 
 export const Login = (props: LoginProps) => {
-  const { login, onError } = props;
-  const { isLoading, run } = useAsync(undefined, { throwOnError: true });
+  const { login, isLoading } = props;
   const [initialValue] = useState({
-    username: "admin",
+    username: "123",
     password: "admin",
   });
   const handleSubmit = async (values: SubmitProps) => {
-    try {
-      await run(login(values));
-    } catch (e) {
-      onError(e as Error);
-    }
+    await login(values);
   };
   return (
     <Form onFinish={handleSubmit} initialValues={initialValue}>
