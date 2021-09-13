@@ -22,13 +22,11 @@ function App() {
   return (
     <ErrorBoundary fallbackRender={FullPageErrorFallback}>
       <Suspense fallback={<Loading />}>
-        <ThemeProvider theme={THEME}>
-          <Container className="App">
-            <ResetStyle />
-            <GlobalStyle />
-            {user ? <UnAuthenticatedApp /> : <UnAuthenticatedApp />}
-          </Container>
-        </ThemeProvider>
+        <Container className="App">
+          <ResetStyle />
+          <GlobalStyle />
+          {user ? <UnAuthenticatedApp /> : <UnAuthenticatedApp />}
+        </Container>
       </Suspense>
     </ErrorBoundary>
   );

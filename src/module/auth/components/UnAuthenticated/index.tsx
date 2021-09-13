@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Login from "../../../../components/Login";
 import { Card } from "antd";
 import styled from "@emotion/styled";
 import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 import { useAuth } from "../../context/auth-context";
+import Highlight from "../../../../components/Highlight";
 
 interface RegisterProps {
   username: string;
@@ -17,8 +18,7 @@ interface LoginProps {
 }
 
 const UnAuthenticatedApp = () => {
-  const { login } = useAuth();
-  const [error, setError] = useState<Error | null>(null);
+  const { login, errorMsg, isLoading } = useAuth();
   const loginHandler = async (value: LoginProps) => {
     await login(value);
   };
@@ -29,8 +29,8 @@ const UnAuthenticatedApp = () => {
       <Header />
       <ShadowCard>
         <Title>Login</Title>
-        {error ? JSON.stringify(error.message) : null}
-        <Login login={loginHandler} onError={setError} />
+        {errorMsg ? <Highlight> {errorMsg}</Highlight> : null}
+        <Login login={loginHandler} isLoading={isLoading} />
       </ShadowCard>
     </Container>
   );

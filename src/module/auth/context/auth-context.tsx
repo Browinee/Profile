@@ -11,6 +11,8 @@ interface AuthContextProps {
   user: User | null;
   login: (form: AuthForm) => void;
   logout: () => void;
+  errorMsg: string;
+  isLoading: boolean;
 }
 
 const AuthContext = React.createContext<AuthContextProps | undefined>(
@@ -30,16 +32,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const loginHandler = (form: AuthForm) => run(Login(form));
   const logoutHandler = () => Logout().then(() => setUser(null));
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <FullPageErrorFallback error={error} />;
-  }
   return (
     <AuthContext.Provider
-      value={{ user, login: loginHandler, logout: logoutHandler }}
+      value={{
+        user,
+        login: loginHandler,
+        logout: logoutHandler,
+        errorMsg: error?.message || "",
+        isLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>
