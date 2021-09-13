@@ -11,6 +11,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
+import { useAuth } from "../../context/auth-context";
 // import ProjectScreen from "../../../projectScreen";
 // import { resetRoutes } from "../../../../utils";
 
@@ -32,6 +33,7 @@ const Main = styled.main`
 `;
 
 const Authenticated = () => {
+  const { logout } = useAuth();
   return (
     <Container>
       {/*<PageHeader />*/}

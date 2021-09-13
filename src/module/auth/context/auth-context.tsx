@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext } from "react";
+import React, { ReactNode, useCallback, useContext } from "react";
 import { User } from "../../../types/user";
 import { AuthForm } from "../../../types/authForm";
 import Loading from "../../../components/Loading";
@@ -6,6 +6,8 @@ import FullPageErrorFallback from "../../../components/FullPageErrorFallback";
 import useAsync from "../../../hooks/useAsync";
 import Login from "../usecase/login";
 import Logout from "../usecase/logout";
+import LocalStorageDB, { USER_INFO } from "../../../infra/localStorageDB";
+import useMount from "../../../hooks/useMount";
 
 interface AuthContextProps {
   user: User | null;
@@ -20,6 +22,11 @@ const AuthContext = React.createContext<AuthContextProps | undefined>(
 );
 AuthContext.displayName = "AuthContext";
 
+const bootstrapUser = async () => {
+  const { user } = LocalStorageDB.load(USER_INFO);
+  return user?.token ? user : null;
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const {
     data: user,
@@ -31,6 +38,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   } = useAsync<User | null>();
   const loginHandler = (form: AuthForm) => run(Login(form));
   const logoutHandler = () => Logout().then(() => setUser(null));
+  useMount(
+    useCallback(() => {
+      run(bootstrapUser());
+    }, [])
+  );
 
   return (
     <AuthContext.Provider
