@@ -1,13 +1,14 @@
-import styled from "@emotion/styled";
 import {
-  Container,
-  Basic,
   AvatarContainer,
   Bar,
+  Basic,
+  Container,
   WorkExperience,
+  BasicInfo,
 } from "./styleComponents";
 import { useAuth } from "../auth/context/auth-context";
 import Avatar from "../../components/Avatar";
+import InfoBlock from "./components/InfoBlock";
 
 function Profile() {
   const { user } = useAuth();
@@ -19,6 +20,9 @@ function Profile() {
           <Avatar imageUrl={""} updateImage={() => {}} />
         </AvatarContainer>
         <Bar />
+        <BasicInfo>
+          <InfoBlock user={user} />
+        </BasicInfo>
       </Basic>
       <WorkExperience>right</WorkExperience>
     </Container>

@@ -30,3 +30,9 @@ export const Bar = styled.div`
   height: 32px;
   background-color: rgb(250, 225, 4);
 `;
+export const BasicInfo = styled.div`
+  width: 100%;
+  color: #fff;
+  background-color: #01426f;
+  height: 100%;
+`;

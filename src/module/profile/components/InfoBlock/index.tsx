@@ -1,0 +1,40 @@
+import { User } from "../../../../types/user";
+import styled from "styled-components";
+
+interface BaseInfoProps {
+  user: User | null;
+}
+
+const Container = styled.div`
+  padding-top: 48px;
+`;
+const Title = styled.h2`
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0;
+  color: white;
+`;
+const Content = styled.ul`
+  padding: 2rem 1.6rem 0 2rem;
+  font-size: 13px;
+
+  li {
+    padding-bottom: 12px;
+  }
+`;
+
+function InfoBlock(props: BaseInfoProps) {
+  const { user } = props;
+  return (
+    <Container>
+      <Title>Basic Info</Title>
+      <Content>
+        <li>Name: {user?.name || "--"}</li>
+        <li>Age: {user?.age || "--"}</li>
+      </Content>
+    </Container>
+  );
+}
+
+export default InfoBlock;
