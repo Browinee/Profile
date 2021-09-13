@@ -12,12 +12,12 @@ import {
   Switch,
 } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
+import Profile from "../../../profile";
 // import ProjectScreen from "../../../projectScreen";
 // import { resetRoutes } from "../../../../utils";
 
 const Container = styled.div`
-  display: grid;
-  grid-template-rows: 6rem 1fr;
+  width: 100vw;
   height: 100vh;
 `;
 // const Header = styled(Row)`
@@ -27,24 +27,20 @@ const Container = styled.div`
 // `;
 // const HeaderLeft = styled(Row)``;
 // const HeaderRight = styled.div``;
-const Main = styled.main`
-  display: flex;
-  overflow: hidden;
-`;
 
 const Authenticated = () => {
   const { logout } = useAuth();
   return (
     <Container>
       {/*<PageHeader />*/}
-      <Main>
-        <Router>
-          <Switch>
-            <Route path={"/profile"}>div</Route>
-            <Redirect to="/profile" />
-          </Switch>
-        </Router>
-      </Main>
+      <Router>
+        <Switch>
+          <Route path={"/profile"}>
+            <Profile />
+          </Route>
+          <Redirect to="/profile" />
+        </Switch>
+      </Router>
     </Container>
   );
 };
