@@ -1,10 +1,11 @@
-import { rest, RestRequest } from "msw";
+import { ResponseComposition, rest, RestRequest } from "msw";
 import UserDB from "./data/user";
 import { AuthForm } from "../types/authForm";
+import { User } from "../types/user";
 
 const sleep = () =>
   new Promise((resolve) => {
-    setTimeout(resolve, 3000);
+    setTimeout(resolve, 500);
   });
 
 const handlers = [

@@ -1,18 +1,24 @@
-// import React from "react";
+import React from "react";
+import styled from "styled-components";
 // import ProjectList from "../../../projectLIst";
 // import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 // import { Button, Dropdown, Menu } from "antd";
 // import { useAuth } from "../../../../context/auth-context";
 // import { Navigate, Route, Routes } from "react-router";
-// import { BrowserRouter as Router } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 // import ProjectScreen from "../../../projectScreen";
 // import { resetRoutes } from "../../../../utils";
 
-// const Container = styled.div`
-//   display: grid;
-//   grid-template-rows: 6rem 1fr;
-//   height: 100vh;
-// `;
+const Container = styled.div`
+  display: grid;
+  grid-template-rows: 6rem 1fr;
+  height: 100vh;
+`;
 // const Header = styled(Row)`
 //   padding: 3.2rem;
 //   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
@@ -20,33 +26,26 @@
 // `;
 // const HeaderLeft = styled(Row)``;
 // const HeaderRight = styled.div``;
-// const Main = styled.main`
-//   display: flex;
-//   overflow: hidden;
-// `;
+const Main = styled.main`
+  display: flex;
+  overflow: hidden;
+`;
 
 const Authenticated = () => {
-  return <div>Authenticated</div>;
+  return (
+    <Container>
+      {/*<PageHeader />*/}
+      <Main>
+        <Router>
+          <Switch>
+            <Route path={"/profile"}>div</Route>
+            <Redirect to="/profile" />
+          </Switch>
+        </Router>
+      </Main>
+    </Container>
+  );
 };
-// const Authenticated = () => {
-//     return (
-//         <Container>
-//             <PageHeader />
-//             <Main>
-//                 <Router>
-//                     <Routes>
-//                         <Route path={"/projects"} element={<ProjectList />} />
-//                         <Route
-//                             path={"/projects/:projectId/*"}
-//                             element={<ProjectScreen />}
-//                         />
-//                         <Navigate to={"/projects"} />
-//                     </Routes>
-//                 </Router>
-//             </Main>
-//         </Container>
-//     );
-// };
 // const PageHeader = () => {
 //   const { logout, user } = useAuth();
 //   return (

@@ -47,7 +47,6 @@ const useAsync = <T,>(
     });
     return promise.then(setData).catch((error) => {
       setError(error);
-      console.log("error", error, config);
       if (config.throwOnError) return Promise.reject(error);
     });
   };

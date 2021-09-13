@@ -17,7 +17,7 @@ interface LoginProps {
 export const Login = (props: LoginProps) => {
   const { login, isLoading } = props;
   const [initialValue] = useState({
-    username: "123",
+    username: "admin",
     password: "admin",
   });
   const handleSubmit = async (values: SubmitProps) => {

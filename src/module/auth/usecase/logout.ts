@@ -1,6 +1,6 @@
-import Storage, { USER_INFO } from "../../../infra/storage";
+import LocalStorageDB, { USER_INFO } from "../../../infra/localStorageDB";
 
 const Logout = async () => {
-  Storage.delete(USER_INFO);
+  LocalStorageDB.delete(USER_INFO);
 };
 export default Logout;
