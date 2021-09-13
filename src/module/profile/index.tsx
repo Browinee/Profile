@@ -5,7 +5,7 @@ import {
   Container,
   WorkExperience,
   BasicInfo,
-} from "./styleComponents";
+} from "./components/styleComponents";
 import { useAuth } from "../auth/context/auth-context";
 import Avatar from "../../components/Avatar";
 import InfoBlock from "./components/InfoBlock";

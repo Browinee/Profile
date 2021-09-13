@@ -1,5 +1,6 @@
 import { User } from "../../../../types/user";
 import styled from "styled-components";
+import EditIcon from "../../../../components/EditIcon";
 
 interface BaseInfoProps {
   user: User | null;
@@ -12,8 +13,12 @@ const Title = styled.h2`
   text-align: center;
   font-weight: bold;
   font-size: 20px;
-  margin: 0;
+  margin-right: 1rem;
   color: white;
+`;
+const Header = styled.header`
+  display: flex;
+  justify-content: center;
 `;
 const Content = styled.ul`
   padding: 2rem 1.6rem 0 2rem;
@@ -28,7 +33,10 @@ function InfoBlock(props: BaseInfoProps) {
   const { user } = props;
   return (
     <Container>
-      <Title>Basic Info</Title>
+      <Header>
+        <Title>Basic Info</Title>
+        <EditIcon openEditModal={() => {}} />
+      </Header>
       <Content>
         <li>Name: {user?.name || "--"}</li>
         <li>Age: {user?.age || "--"}</li>
