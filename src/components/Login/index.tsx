@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input } from "antd";
 import { LongButton } from "../Button";
 import useAsync from "../../hooks/useAsync";
+import { FieldError } from "rc-field-form/es/interface";
 
 interface SubmitProps {
   username: string;
@@ -16,6 +17,10 @@ interface LoginProps {
 export const Login = (props: LoginProps) => {
   const { login, onError } = props;
   const { isLoading, run } = useAsync(undefined, { throwOnError: true });
+  const [initialValue] = useState({
+    username: "admin",
+    password: "admin",
+  });
   const handleSubmit = async (values: SubmitProps) => {
     try {
       await run(login(values));
@@ -23,9 +28,8 @@ export const Login = (props: LoginProps) => {
       onError(e as Error);
     }
   };
-
   return (
-    <Form onFinish={handleSubmit}>
+    <Form onFinish={handleSubmit} initialValues={initialValue}>
       <Form.Item
         name={"username"}
         rules={[{ required: true, message: "Please enter username" }]}
