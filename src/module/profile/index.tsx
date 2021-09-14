@@ -22,6 +22,7 @@ import { getBase64 } from "../../utils/base64";
 import { RESUME_MAPS } from "./constants";
 import BasicForm from "./components/Template/Basic";
 import SummaryForm from "./components/Template/Summary";
+import { adapterBasic, adapterSummary } from "./adapter";
 
 function Profile() {
   const { user, updateUser } = useAuth();
@@ -51,20 +52,6 @@ function Profile() {
       ...value,
     } as User;
     updateUser(newUser);
-  };
-  const adapterBasic = (userData: User | null) => {
-    const { age = 0, github = "", name = "", email = "" } = userData || {};
-    return {
-      name,
-      github,
-      age,
-      email,
-    };
-  };
-
-  const adapterSummary = (userData: User | null) => {
-    const { summary = [] } = userData || {};
-    return summary;
   };
 
   return (
