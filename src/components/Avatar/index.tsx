@@ -7,13 +7,12 @@ import { getBase64 } from "../../utils/base64";
 
 interface AvatarProps {
   imageUrl: string;
-  updateImage: (imageUrl: any) => void;
+  updateImage?: (imageUrl: any) => void;
+  size?: number;
 }
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -23,26 +22,22 @@ const Block = styled.div`
   height: 8px;
 `;
 function Avatar(props: AvatarProps) {
-  const { imageUrl, updateImage } = props;
+  const { size = 120, imageUrl, updateImage = () => {} } = props;
   const changeHandler = (info: UploadChangeParam) => {
     getBase64(info.file.originFileObj, (imageUrl) => updateImage(imageUrl));
   };
   return (
     <Container>
-      <AntdAvatar
-        size={120}
-        icon={imageUrl ? <UserOutlined /> : <UserOutlined />}
-      />
-      <Block />
-      <Upload
-        name="file"
-        onChange={changeHandler}
-        showUploadList={false}
-        action=""
-      >
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
-      </Upload>
-      ,
+      <AntdAvatar size={size} src={imageUrl ? imageUrl : <UserOutlined />} />
+      {/*<Block />*/}
+      {/*<Upload*/}
+      {/*  name="file"*/}
+      {/*  onChange={changeHandler}*/}
+      {/*  showUploadList={false}*/}
+      {/*  action=""*/}
+      {/*>*/}
+      {/*  <Button icon={<UploadOutlined />}>Click to Upload</Button>*/}
+      {/*</Upload>*/}
     </Container>
   );
 }

@@ -11,6 +11,7 @@ import Avatar from "../../components/Avatar";
 import InfoBlock from "./components/infoBlock";
 import Summary from "./components/summary";
 import { Divider } from "antd";
+import Experience from "./components/Experience";
 
 function Profile() {
   const { user } = useAuth();
@@ -29,6 +30,7 @@ function Profile() {
       <WorkExperience>
         <Summary summary={user?.summary || []} />
         <Divider />
+        <Experience workExperience={user?.workExperience || []} />
       </WorkExperience>
     </Container>
   );

@@ -12,7 +12,7 @@ export interface User {
 }
 
 export interface Work {
-  startData: string;
+  startDate: string;
   endDate: string;
   title: string;
   company: string;
