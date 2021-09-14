@@ -1,4 +1,5 @@
 import { Work } from "../types/user";
+import unistar from "../assets/unistar-logo.png";
 
 export const WORKEXPERIENCE: Work[] = [
   {
@@ -6,7 +7,7 @@ export const WORKEXPERIENCE: Work[] = [
     endDate: "",
     title: "Frontend Engineer",
     company: "UNISTAR",
-    companyLogo: "https://pf2-data.uenvsit.com/favicon.ico",
+    companyLogo: unistar,
     description: [
       {
         title: "Refactor old platform.",

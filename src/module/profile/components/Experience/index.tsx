@@ -1,6 +1,9 @@
 import { Work } from "../../../../types/user";
 import styled from "styled-components";
 import ExperienceBLock from "./experienceBLock";
+import { FeatureToggle } from "../../../auth/auth";
+import { PERMISSION_MAP } from "../../../auth/permissionList";
+import EditIcon from "../../../../components/EditIcon";
 
 interface ExperienceProps {
   workExperience: Work[];
@@ -18,10 +21,17 @@ const Experience = (props: ExperienceProps) => {
   const { workExperience } = props;
   return (
     <Container>
-      <Header>Experience</Header>
-      {workExperience.map((exp, idx) => {
-        return <ExperienceBLock key={idx} {...exp} />;
-      })}
+      <Header>
+        Experience
+        <FeatureToggle permissions={[PERMISSION_MAP.SUMMARY_VIEW]}>
+          <EditIcon openEditModal={() => {}} />
+        </FeatureToggle>
+      </Header>
+      <FeatureToggle permissions={[PERMISSION_MAP.SUMMARY_VIEW]}>
+        {workExperience.map((exp, idx) => {
+          return <ExperienceBLock key={idx} {...exp} />;
+        })}
+      </FeatureToggle>
     </Container>
   );
 };

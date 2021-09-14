@@ -3,7 +3,8 @@ import { User } from "../../types/user";
 import LocalStorageDB, { USER_INFO } from "../../infra/localStorageDB";
 import { PERMISSION } from "../../module/auth/permissionList";
 import { SUMMARY, WORKEXPERIENCE } from "../../constants";
-import avatar from "./avatar.png";
+import avatar from "../../assets/avatar.png";
+
 let UserInfo: Omit<User, "token"> = {
   id: "1",
   name: "Justin",
