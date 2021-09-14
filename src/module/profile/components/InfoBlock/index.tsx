@@ -40,6 +40,12 @@ function InfoBlock(props: BaseInfoProps) {
       <Content>
         <li>Name: {user?.name || "--"}</li>
         <li>Age: {user?.age || "--"}</li>
+        <li>
+          Github:{" "}
+          <a href={user?.github || ""} target={"_blank"}>
+            {user?.github || ""}
+          </a>
+        </li>
       </Content>
     </Container>
   );
