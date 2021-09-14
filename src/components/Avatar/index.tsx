@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Avatar as AntdAvatar, Button, Upload } from "antd";
 import { UploadOutlined, UserOutlined } from "@ant-design/icons";
@@ -9,6 +9,7 @@ interface AvatarProps {
   imageUrl: string;
   updateImage?: (imageUrl: any) => void;
   size?: number;
+  upload?: boolean;
 }
 
 const Container = styled.div`
@@ -18,26 +19,29 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const Block = styled.div`
-  height: 8px;
-`;
 function Avatar(props: AvatarProps) {
-  const { size = 120, imageUrl, updateImage = () => {} } = props;
+  const {
+    size = 100,
+    imageUrl,
+    updateImage = () => {},
+    upload = false,
+  } = props;
   const changeHandler = (info: UploadChangeParam) => {
     getBase64(info.file.originFileObj, (imageUrl) => updateImage(imageUrl));
   };
   return (
     <Container>
       <AntdAvatar size={size} src={imageUrl ? imageUrl : <UserOutlined />} />
-      {/*<Block />*/}
-      {/*<Upload*/}
-      {/*  name="file"*/}
-      {/*  onChange={changeHandler}*/}
-      {/*  showUploadList={false}*/}
-      {/*  action=""*/}
-      {/*>*/}
-      {/*  <Button icon={<UploadOutlined />}>Click to Upload</Button>*/}
-      {/*</Upload>*/}
+      {upload && (
+        <Upload
+          name="file"
+          onChange={changeHandler}
+          showUploadList={false}
+          action=""
+        >
+          <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        </Upload>
+      )}
     </Container>
   );
 }

@@ -20,7 +20,7 @@ function Profile() {
     <Container>
       <Basic>
         <AvatarContainer>
-          <Avatar imageUrl={""} updateImage={() => {}} />
+          <Avatar imageUrl={""} updateImage={() => {}} upload />
         </AvatarContainer>
         <Bar />
         <BasicInfo>
