@@ -56,11 +56,11 @@ const ExperienceBLock = (props: Work) => {
         {description.map((info) => {
           const { title, item } = info;
           return (
-            <li>
+            <li key={title}>
               {title}
               <List>
                 {item.map((list) => {
-                  return <li>{list}</li>;
+                  return <li key={list}>{list}</li>;
                 })}
               </List>
             </li>

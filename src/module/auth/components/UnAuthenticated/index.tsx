@@ -6,12 +6,6 @@ import useDocumentTitle from "../../../../hooks/useDocumentTitle";
 import { useAuth } from "../../context/auth-context";
 import Highlight from "../../../../components/Highlight";
 
-interface RegisterProps {
-  username: string;
-  password: string;
-  cpassword: string;
-}
-
 interface LoginProps {
   username: string;
   password: string;

@@ -1,8 +1,6 @@
 import React, { ReactNode, useCallback, useContext } from "react";
 import { User } from "../../../types/user";
 import { AuthForm } from "../../../types/authForm";
-import Loading from "../../../components/Loading";
-import FullPageErrorFallback from "../../../components/FullPageErrorFallback";
 import useAsync from "../../../hooks/useAsync";
 import Login from "../usecase/login";
 import Logout from "../usecase/logout";
@@ -33,7 +31,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     data: user,
     error,
     isLoading,
-    isError,
     run,
     setData: setUser,
     updateData: updateUser,

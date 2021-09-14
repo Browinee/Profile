@@ -2,14 +2,14 @@ import React, { Suspense } from "react";
 import "./App.css";
 import GlobalStyle from "./theme/globalStyles";
 import ResetStyle from "./theme/resestStyles";
-import styled, { ThemeProvider } from "styled-components";
-import THEME from "./theme/theme";
+import styled from "styled-components";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import FullPageErrorFallback from "./components/FullPageErrorFallback";
 import Loading from "./components/Loading";
 import { useAuth } from "./module/auth/context/auth-context";
 import UnAuthenticatedApp from "./module/auth/components/UnAuthenticated";
 import Authenticated from "./module/auth/components/Authenticated";
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;

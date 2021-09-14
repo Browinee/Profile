@@ -24,7 +24,7 @@ const Summary = (props: SummaryProps) => {
       <Divider style={{ margin: "8px" }} />
       <SummaryList>
         {summary.map((list) => {
-          return <li>{list}</li>;
+          return <li key={list}>{list}</li>;
         })}
       </SummaryList>
     </>

@@ -13,8 +13,6 @@ import {
 } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
 import Profile from "../../../profile";
-// import ProjectScreen from "../../../projectScreen";
-// import { resetRoutes } from "../../../../utils";
 
 const Container = styled.div`
   width: 100vw;

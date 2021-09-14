@@ -1,11 +1,11 @@
 import { EditFilled } from "@ant-design/icons";
 
-interface EditIcon {
+interface EditIconProps {
   size?: number;
   openEditModal: (type?: any) => void;
 }
 
-const EditIcon = (props: EditIcon) => {
+const EditIcon = (props: EditIconProps) => {
   const { size = 22, openEditModal } = props;
   const clickHandler = () => {
     openEditModal();

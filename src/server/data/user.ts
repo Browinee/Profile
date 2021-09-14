@@ -1,7 +1,7 @@
 import { AuthForm } from "../../types/authForm";
 import { User } from "../../types/user";
 import LocalStorageDB, { USER_INFO } from "../../infra/localStorageDB";
-import { PERMISSION } from "../../module/auth/constants";
+import { PERMISSION } from "../../module/auth/permissionList";
 import { SUMMARY, WORKEXPERIENCE } from "../../constants";
 import avatar from "./avatar.png";
 let UserInfo: Omit<User, "token"> = {

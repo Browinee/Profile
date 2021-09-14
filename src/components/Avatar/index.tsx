@@ -1,15 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Avatar as AntdAvatar, Button, Upload } from "antd";
-import { UploadOutlined, UserOutlined } from "@ant-design/icons";
-import { UploadChangeParam } from "antd/lib/upload/interface";
-import { getBase64 } from "../../utils/base64";
+import { Avatar as AntdAvatar } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 interface AvatarProps {
   imageUrl: string;
   updateImage?: (imageUrl: any) => void;
   size?: number;
-  upload?: boolean;
 }
 
 const Container = styled.div`
@@ -20,15 +17,8 @@ const Container = styled.div`
 `;
 
 function Avatar(props: AvatarProps) {
-  const {
-    size = 100,
-    imageUrl,
-    updateImage = () => {},
-    upload = false,
-  } = props;
-  const changeHandler = (info: UploadChangeParam) => {
-    getBase64(info.file.originFileObj, (imageUrl) => updateImage(imageUrl));
-  };
+  const { size = 100, imageUrl } = props;
+
   return (
     <Container>
       <AntdAvatar
@@ -36,16 +26,6 @@ function Avatar(props: AvatarProps) {
         src={imageUrl ? imageUrl : <UserOutlined />}
         style={{ marginBottom: "0.5rem" }}
       />
-      {upload && (
-        <Upload
-          name="file"
-          onChange={changeHandler}
-          showUploadList={false}
-          action=""
-        >
-          <Button icon={<UploadOutlined />}>Click to Upload</Button>
-        </Upload>
-      )}
     </Container>
   );
 }

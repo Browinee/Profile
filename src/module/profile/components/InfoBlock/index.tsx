@@ -42,7 +42,7 @@ function InfoBlock(props: BaseInfoProps) {
         <li>Age: {user?.age || "--"}</li>
         <li>
           Github:{" "}
-          <a href={user?.github || ""} target={"_blank"}>
+          <a href={user?.github || ""} target={"_blank"} rel="noreferrer">
             {user?.github || ""}
           </a>
         </li>
