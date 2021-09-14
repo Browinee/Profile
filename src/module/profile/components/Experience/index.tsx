@@ -16,7 +16,6 @@ const Container = styled.div`
 `;
 const Experience = (props: ExperienceProps) => {
   const { workExperience } = props;
-  console.log("work", workExperience);
   return (
     <Container>
       <Header>Experience</Header>

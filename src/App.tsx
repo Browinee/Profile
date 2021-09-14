@@ -20,7 +20,6 @@ const Container = styled.div`
 
 function App() {
   const { user } = useAuth();
-  console.log("user", user);
   return (
     <ErrorBoundary fallbackRender={FullPageErrorFallback}>
       <Suspense fallback={<Loading />}>

@@ -15,6 +15,7 @@ interface AuthContextProps {
   logout: () => void;
   errorMsg: string;
   isLoading: boolean;
+  updateUser: (user: User) => void;
 }
 
 const AuthContext = React.createContext<AuthContextProps | undefined>(
@@ -35,9 +36,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     isError,
     run,
     setData: setUser,
+    updateData: updateUser,
   } = useAsync<User | null>();
   const loginHandler = (form: AuthForm) => run(Login(form));
   const logoutHandler = () => Logout().then(() => setUser(null));
+
   useMount(
     useCallback(() => {
       run(bootstrapUser());
@@ -52,6 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         logout: logoutHandler,
         errorMsg: error?.message || "",
         isLoading,
+        updateUser,
       }}
     >
       {children}

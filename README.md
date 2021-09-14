@@ -38,3 +38,7 @@ yarn run test
 ```shell
 yarn run storybook
 ```
+
+Others:
+
+1. check upload image

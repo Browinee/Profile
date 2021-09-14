@@ -2,9 +2,9 @@ import {
   AvatarContainer,
   Bar,
   Basic,
+  BasicInfo,
   Container,
   WorkExperience,
-  BasicInfo,
 } from "./components/styleComponents";
 import { useAuth } from "../auth/context/auth-context";
 import Avatar from "../../components/Avatar";
@@ -12,15 +12,27 @@ import InfoBlock from "./components/infoBlock";
 import Summary from "./components/summary";
 import { Divider } from "antd";
 import Experience from "./components/Experience";
+import { User } from "../../types/user";
 
 function Profile() {
-  const { user } = useAuth();
-  console.log("data", user);
+  const { user, updateUser } = useAuth();
+  const updateImageHandler = (imageUrl: string) => {
+    const newUserData = {
+      ...user,
+      avatar: imageUrl,
+    } as User;
+    updateUser(newUserData);
+  };
+  console.log("user", user);
   return (
     <Container>
       <Basic>
         <AvatarContainer>
-          <Avatar imageUrl={""} updateImage={() => {}} upload />
+          <Avatar
+            imageUrl={user?.avatar || ""}
+            updateImage={updateImageHandler}
+            upload
+          />
         </AvatarContainer>
         <Bar />
         <BasicInfo>

@@ -5,6 +5,7 @@ interface State<T> {
   data: T | null;
   status: "idle" | "loading" | "error" | "success";
 }
+
 const defaultInitialState: State<null> = {
   status: "idle",
   data: null,
@@ -23,7 +24,13 @@ const useAsync = <T,>(
     ...initialState,
   });
   const config = { ...defaultConfig, ...initialConfig };
-
+  const updateData = (data: T) => {
+    setState({
+      status: "idle",
+      error: null,
+      data,
+    });
+  };
   const setData = (data: T) =>
     setState({
       status: "success",
@@ -57,6 +64,7 @@ const useAsync = <T,>(
     isSuccess: state.status === "success",
     setData,
     setError,
+    updateData,
     run,
     ...state,
   };

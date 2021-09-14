@@ -31,7 +31,11 @@ function Avatar(props: AvatarProps) {
   };
   return (
     <Container>
-      <AntdAvatar size={size} src={imageUrl ? imageUrl : <UserOutlined />} />
+      <AntdAvatar
+        size={size}
+        src={imageUrl ? imageUrl : <UserOutlined />}
+        style={{ marginBottom: "0.5rem" }}
+      />
       {upload && (
         <Upload
           name="file"

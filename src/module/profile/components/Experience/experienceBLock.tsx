@@ -54,7 +54,6 @@ const ExperienceBLock = (props: Work) => {
       </Header>
       <List>
         {description.map((info) => {
-          console.log("item", info);
           const { title, item } = info;
           return (
             <li>
