@@ -21,6 +21,7 @@ import { UploadChangeParam } from "antd/lib/upload/interface";
 import { getBase64 } from "../../utils/base64";
 import { RESUME_MAPS } from "./constants";
 import BasicForm from "./components/Template/Basic";
+import SummaryForm from "./components/Template/Summary";
 
 function Profile() {
   const { user, updateUser } = useAuth();
@@ -60,6 +61,12 @@ function Profile() {
       email,
     };
   };
+
+  const adapterSummary = (userData: User | null) => {
+    const { summary = [] } = userData || {};
+    return summary;
+  };
+
   return (
     <Container>
       <Basic>
@@ -84,21 +91,24 @@ function Profile() {
         </BasicInfo>
       </Basic>
       <WorkExperience>
-        <Summary summary={user?.summary || []} />
+        <Summary summary={user?.summary || []} editHandler={modalHandler} />
         <Divider />
         <Experience workExperience={user?.workExperience || []} />
       </WorkExperience>
-      {
-        modalType === RESUME_MAPS.basic && (
-          <BasicForm
-            basicInfo={adapterBasic(user)}
-            cancelHandler={onClose}
-            confirmHandler={onConfirmHandler}
-          />
-        )
-        // modalType === RESUME_MAPS.summary && () => {}
-        // modalType === RESUME_MAPS.experience && () => {}
-      }
+      {modalType === RESUME_MAPS.basic && (
+        <BasicForm
+          basicInfo={adapterBasic(user)}
+          cancelHandler={onClose}
+          confirmHandler={onConfirmHandler}
+        />
+      )}
+      {modalType === RESUME_MAPS.summary && (
+        <SummaryForm
+          summary={adapterSummary(user)}
+          cancelHandler={onClose}
+          confirmHandler={onConfirmHandler}
+        />
+      )}
     </Container>
   );
 }

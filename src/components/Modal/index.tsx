@@ -17,6 +17,7 @@ const Modal: React.FC<ModalProps> = (props) => {
       onOk={confirmHandler}
       onCancel={cancelHandler}
       width={width}
+      bodyStyle={{ overflowX: "auto", height: "500px" }}
     >
       {children}
     </AntdModal>
