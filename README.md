@@ -42,3 +42,4 @@ yarn run storybook
 Others:
 
 1. check upload image
+2. React.memo different parts

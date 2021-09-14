@@ -22,8 +22,11 @@ export const WorkExperience = styled.div`
 export const AvatarContainer = styled.div`
   width: 100%;
   height: 180px;
-  text-align: center;
   background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const Bar = styled.div`

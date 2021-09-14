@@ -20,6 +20,7 @@ import React, { useCallback, useState } from "react";
 import { UploadChangeParam } from "antd/lib/upload/interface";
 import { getBase64 } from "../../utils/base64";
 import { RESUME_MAPS } from "./constants";
+import BasicForm from "./components/Template/Basic";
 
 function Profile() {
   const { user, updateUser } = useAuth();
@@ -40,8 +41,24 @@ function Profile() {
   };
   const [modalType, setModalType] = useState("");
   const modalHandler = useCallback((type) => setModalType(type), []);
-  const onClose = () => {
+  const onClose = useCallback(() => {
     setModalType("");
+  }, []);
+  const onConfirmHandler = (value: any) => {
+    const newUser = {
+      ...user,
+      ...value,
+    };
+    updateUser(newUser);
+  };
+  const adapterBasic = (userData: User | null) => {
+    const { age = 0, github = "", name = "", email = "" } = userData || {};
+    return {
+      name,
+      github,
+      age,
+      email,
+    };
   };
   return (
     <Container>
@@ -63,7 +80,7 @@ function Profile() {
         </AvatarContainer>
         <Bar />
         <BasicInfo>
-          <InfoBlock user={user} />
+          <InfoBlock user={user} editHandler={modalHandler} />
         </BasicInfo>
       </Basic>
       <WorkExperience>
@@ -72,7 +89,13 @@ function Profile() {
         <Experience workExperience={user?.workExperience || []} />
       </WorkExperience>
       {
-        // modalType === RESUME_MAPS.basic && () => {}
+        modalType === RESUME_MAPS.basic && (
+          <BasicForm
+            basicInfo={adapterBasic(user)}
+            cancelHandler={onClose}
+            confirmHandler={onConfirmHandler}
+          />
+        )
         // modalType === RESUME_MAPS.summary && () => {}
         // modalType === RESUME_MAPS.experience && () => {}
       }
