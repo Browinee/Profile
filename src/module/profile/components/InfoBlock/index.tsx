@@ -23,7 +23,7 @@ const Header = styled.header`
 const Content = styled.ul`
   padding: 2rem 1.6rem 0 2rem;
   font-size: 13px;
-
+  list-style: none;
   li {
     padding-bottom: 12px;
   }

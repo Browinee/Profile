@@ -1,6 +1,6 @@
 import { Work } from "../types/user";
 
-export const WorkExperience: Work[] = [
+export const WORKEXPERIENCE: Work[] = [
   {
     startData: "2020-08",
     endDate: "",
@@ -19,4 +19,16 @@ export const WorkExperience: Work[] = [
       },
     ],
   },
+];
+
+export const SUMMARY: string[] = [
+  "4+ years of software engineer experiences(Fullstack)",
+  "Co-work with BD/PM/QA/Support team to complete release.",
+  "Manage work and mentor members.",
+  "Familiar with frontend skills like,react, typescript, vue, vuex, d3, scss,webpack,etc.",
+  "Familiar with AWS service, like api gateway, lambda, cloudfront,etc",
+  "Solid experiences in performing gitlab CI/CD to existing product.",
+  "Solid experiences in performing multiple testing tools like react-testing-library/Jest/ Mocha/ Nightwatch,etc to ensure coding quality.",
+  "Communicative, practical, problem solving, and passionate about coding and leaning innovative technology.",
+  "Others: play nextjs, nests, tailwind, etc in my side projects",
 ];

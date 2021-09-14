@@ -8,6 +8,7 @@ export interface User {
   workExperience: Work[];
   avatar: string;
   github: string;
+  summary: string[];
 }
 
 export interface Work {

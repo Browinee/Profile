@@ -17,6 +17,7 @@ export const WorkExperience = styled.div`
   width: 70%;
   height: 100%;
   overflow-x: auto;
+  padding: 10px;
 `;
 export const AvatarContainer = styled.div`
   width: 100%;

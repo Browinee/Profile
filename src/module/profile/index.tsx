@@ -8,7 +8,9 @@ import {
 } from "./components/styleComponents";
 import { useAuth } from "../auth/context/auth-context";
 import Avatar from "../../components/Avatar";
-import InfoBlock from "./components/InfoBlock";
+import InfoBlock from "./components/infoBlock";
+import Summary from "./components/summary";
+import { Divider } from "antd";
 
 function Profile() {
   const { user } = useAuth();
@@ -24,7 +26,10 @@ function Profile() {
           <InfoBlock user={user} />
         </BasicInfo>
       </Basic>
-      <WorkExperience>right</WorkExperience>
+      <WorkExperience>
+        <Summary summary={user?.summary || []} />
+        <Divider />
+      </WorkExperience>
     </Container>
   );
 }

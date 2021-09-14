@@ -2,7 +2,7 @@ import { AuthForm } from "../../types/authForm";
 import { User } from "../../types/user";
 import LocalStorageDB, { USER_INFO } from "../../infra/localStorageDB";
 import { PERMISSION } from "../../module/auth/constants";
-import { WorkExperience } from "../../constants";
+import { SUMMARY, WORKEXPERIENCE } from "../../constants";
 
 let UserInfo: Omit<User, "token"> = {
   id: "1",
@@ -10,9 +10,10 @@ let UserInfo: Omit<User, "token"> = {
   email: "Nihilitypeo@gmail.com",
   permission: PERMISSION,
   age: 30,
-  workExperience: WorkExperience,
+  workExperience: WORKEXPERIENCE,
   avatar: "123123",
   github: "https://github.com/Browinee/",
+  summary: SUMMARY,
 };
 const persist = () => LocalStorageDB.save(USER_INFO, JSON.stringify(UserInfo));
 const load = () => Object.assign(UserInfo, LocalStorageDB.load(USER_INFO));

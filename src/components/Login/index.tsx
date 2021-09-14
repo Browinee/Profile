@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input } from "antd";
 import { LongButton } from "../Button";
-import useAsync from "../../hooks/useAsync";
-import { FieldError } from "rc-field-form/es/interface";
 
 interface SubmitProps {
   username: string;
