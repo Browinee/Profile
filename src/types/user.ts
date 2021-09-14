@@ -7,13 +7,19 @@ export interface User {
   age: number;
   workExperience: Work[];
   avatar: string;
+  github: string;
 }
 
-interface Work {
+export interface Work {
   startData: string;
   endDate: string;
   title: string;
   company: string;
   companyLogo: string;
-  description: string;
+  description: WorkItem[];
+}
+
+export interface WorkItem {
+  title: string;
+  item: string[];
 }
