@@ -8,17 +8,18 @@ import {
 } from "./components/styleComponents";
 import { useAuth } from "../auth/context/auth-context";
 import Avatar from "../../components/Avatar";
-import InfoBlock from "./components/infoBlock";
-import Summary from "./components/summary";
+import InfoBlock from "./components/InfoBlock";
+import Summary from "./components/Summary";
 import { Button, Divider, Upload } from "antd";
 import Experience from "./components/Experience";
 import { User } from "../../types/user";
 import { FeatureToggle } from "../auth/auth";
 import { PERMISSION_MAP } from "../auth/permissionList";
 import { UploadOutlined } from "@ant-design/icons";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { UploadChangeParam } from "antd/lib/upload/interface";
 import { getBase64 } from "../../utils/base64";
+import { RESUME_MAPS } from "./constants";
 
 function Profile() {
   const { user, updateUser } = useAuth();
@@ -32,11 +33,15 @@ function Profile() {
     },
     [user, updateUser]
   );
-  console.log("user", user);
   const changeHandler = (info: UploadChangeParam) => {
     getBase64(info.file.originFileObj, (imageUrl) =>
       updateImageHandler(imageUrl)
     );
+  };
+  const [modalType, setModalType] = useState("");
+  const modalHandler = useCallback((type) => setModalType(type), []);
+  const onClose = () => {
+    setModalType("");
   };
   return (
     <Container>
@@ -66,6 +71,11 @@ function Profile() {
         <Divider />
         <Experience workExperience={user?.workExperience || []} />
       </WorkExperience>
+      {
+        // modalType === RESUME_MAPS.basic && () => {}
+        // modalType === RESUME_MAPS.summary && () => {}
+        // modalType === RESUME_MAPS.experience && () => {}
+      }
     </Container>
   );
 }
