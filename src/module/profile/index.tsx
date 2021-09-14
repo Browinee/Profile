@@ -45,11 +45,11 @@ function Profile() {
   const onClose = useCallback(() => {
     setModalType("");
   }, []);
-  const onConfirmHandler = (value: any) => {
+  const onConfirmHandler = (value: Partial<User>) => {
     const newUser = {
       ...user,
       ...value,
-    };
+    } as User;
     updateUser(newUser);
   };
   const adapterBasic = (userData: User | null) => {

@@ -11,7 +11,7 @@ interface BasicFormProps {
     email: string;
   };
   cancelHandler: () => void;
-  confirmHandler: (user: User) => void;
+  confirmHandler: (value: any) => void;
 }
 
 const BasicForm = (props: BasicFormProps) => {
