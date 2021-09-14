@@ -5,6 +5,7 @@ import { FeatureToggle } from "../../../auth/auth";
 import { PERMISSION_MAP } from "../../../auth/permissionList";
 import { useCallback } from "react";
 import { RESUME_MAPS } from "../../constants";
+import { down } from "styled-breakpoints";
 
 interface BaseInfoProps {
   user: User | null;
@@ -32,6 +33,18 @@ const Content = styled.ul`
 
   li {
     padding-bottom: 12px;
+
+    span {
+      display: inline-block;
+
+      ${down("sm")} {
+        width: 120px;
+        margin-top: 0.5rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
   }
 `;
 
@@ -52,12 +65,22 @@ function InfoBlock(props: BaseInfoProps) {
         <Content>
           <li>Name: {user?.name || "--"}</li>
           <li>Age: {user?.age || "--"}</li>
-          <li>Email: {user?.email || "--"}</li>
+          <li>
+            Email:{" "}
+            <span title={user?.email || "--"}>{user?.email || "--"} </span>
+          </li>
           <li>
             Github:{" "}
-            <a href={user?.github || ""} target={"_blank"} rel="noreferrer">
-              {user?.github || ""}
-            </a>
+            <span>
+              <a
+                href={user?.github || ""}
+                target={"_blank"}
+                rel="noreferrer"
+                title={user?.github || ""}
+              >
+                {user?.github || ""}
+              </a>
+            </span>
           </li>
         </Content>
       </FeatureToggle>

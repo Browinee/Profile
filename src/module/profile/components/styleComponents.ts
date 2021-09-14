@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { down } from "styled-breakpoints";
 
 export const Container = styled.main`
   width: 100vw;
@@ -11,6 +12,9 @@ export const Basic = styled.aside`
   height: 100%;
   display: flex;
   flex-direction: column;
+  ${down("md")} {
+    width: 40%;
+  }
 `;
 
 export const WorkExperience = styled.div`
@@ -18,6 +22,9 @@ export const WorkExperience = styled.div`
   height: 100%;
   overflow-x: auto;
   padding: 10px;
+  ${down("md")} {
+    width: 60%;
+  }
 `;
 export const AvatarContainer = styled.div`
   width: 100%;
