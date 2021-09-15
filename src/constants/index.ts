@@ -3,6 +3,7 @@ import unistar from "../assets/unistar-logo.png";
 
 export const WORKEXPERIENCE: Work[] = [
   {
+    id: btoa("Frontend Engineer" + "UNISTAR" + "startData" + "endDate"),
     startDate: "2020-08",
     endDate: "",
     title: "Frontend Engineer",

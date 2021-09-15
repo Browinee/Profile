@@ -4,9 +4,12 @@ import ExperienceBLock from "./experienceBLock";
 import { FeatureToggle } from "../../../auth/auth";
 import { PERMISSION_MAP } from "../../../auth/permissionList";
 import EditIcon from "../../../../components/EditIcon";
+import { useCallback } from "react";
+import { RESUME_MAPS } from "../../constants";
 
 interface ExperienceProps {
   workExperience: Work[];
+  editHandler: (type: string) => void;
 }
 
 const Header = styled.header`
@@ -18,13 +21,16 @@ const Container = styled.div`
   height: 100%;
 `;
 const Experience = (props: ExperienceProps) => {
-  const { workExperience } = props;
+  const { workExperience, editHandler } = props;
+  const clickHandler = useCallback(() => {
+    editHandler(RESUME_MAPS.experience);
+  }, []);
   return (
     <Container>
       <Header>
         Experience
         <FeatureToggle permissions={[PERMISSION_MAP.SUMMARY_VIEW]}>
-          <EditIcon openEditModal={() => {}} />
+          <EditIcon openEditModal={clickHandler} />
         </FeatureToggle>
       </Header>
       <FeatureToggle permissions={[PERMISSION_MAP.SUMMARY_VIEW]}>

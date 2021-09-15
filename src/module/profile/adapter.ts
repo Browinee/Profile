@@ -14,3 +14,8 @@ export const adapterSummary = (userData: User | null) => {
   const { summary = [] } = userData || {};
   return summary;
 };
+
+export const adapterWorkExperience = (userData: User | null) => {
+  const { workExperience = [] } = userData || {};
+  return workExperience;
+};

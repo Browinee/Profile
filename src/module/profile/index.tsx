@@ -22,7 +22,8 @@ import { getBase64 } from "../../utils/base64";
 import { RESUME_MAPS } from "./constants";
 import BasicForm from "./components/Template/Basic";
 import SummaryForm from "./components/Template/Summary";
-import { adapterBasic, adapterSummary } from "./adapter";
+import { adapterBasic, adapterSummary, adapterWorkExperience } from "./adapter";
+import ExperienceForm from "./components/Template/Experience";
 
 function Profile() {
   const { user, updateUser } = useAuth();
@@ -80,7 +81,10 @@ function Profile() {
       <WorkExperience>
         <Summary summary={user?.summary || []} editHandler={modalHandler} />
         <Divider />
-        <Experience workExperience={user?.workExperience || []} />
+        <Experience
+          workExperience={user?.workExperience || []}
+          editHandler={modalHandler}
+        />
       </WorkExperience>
       {modalType === RESUME_MAPS.basic && (
         <BasicForm
@@ -92,6 +96,13 @@ function Profile() {
       {modalType === RESUME_MAPS.summary && (
         <SummaryForm
           summary={adapterSummary(user)}
+          cancelHandler={onClose}
+          confirmHandler={onConfirmHandler}
+        />
+      )}
+      {modalType === RESUME_MAPS.experience && (
+        <ExperienceForm
+          workExperience={adapterWorkExperience(user)}
           cancelHandler={onClose}
           confirmHandler={onConfirmHandler}
         />
