@@ -4,22 +4,26 @@ import Modal from "../../../../../components/Modal";
 import { Form, Input } from "antd";
 import React, { useState } from "react";
 import CompanyList from "./components/CompanyList";
+import CompanyInfo from "./components/CompanyInfo";
 
 interface ExperienceFormProps {
   workExperience: Work[];
   cancelHandler: () => void;
   confirmHandler: (value: any) => void;
 }
-// startDate: string;
-// endDate: string;
-// title: string;
-// company: string;
-// companyLogo: string;
-// description: WorkItem[];
-
+const DefaultCompanyInfo: Work = {
+  id: "",
+  company: "",
+  companyLogo: "",
+  title: "",
+  description: [],
+  startDate: new Date().toLocaleDateString(),
+  endDate: new Date().toLocaleDateString(),
+};
 const companyListAdapter = (workExperience: Work[] = []) => {
   return workExperience.map((work) => ({ id: work.id, company: work.company }));
 };
+
 const ExperienceForm = (props: ExperienceFormProps) => {
   const { workExperience, cancelHandler, confirmHandler } = props;
   const [changingWork, setChangingWork] = useState(workExperience);
@@ -45,7 +49,11 @@ const ExperienceForm = (props: ExperienceFormProps) => {
   const selectCompany = (id: string) => {
     const company = changingWork.find((work) => work.id === id);
     setSelectedCompany(company);
+    console.log("company, compa, compay", company);
   };
+
+  const [formRef] = Form.useForm();
+
   return (
     <Modal
       title={"Experience"}
@@ -58,6 +66,10 @@ const ExperienceForm = (props: ExperienceFormProps) => {
           companyList={companyListAdapter(changingWork)}
           removeCompany={removeCompany}
           selectCompany={selectCompany}
+        />
+        <CompanyInfo
+          companyInfo={selectedCompany || DefaultCompanyInfo}
+          formRef={formRef}
         />
       </Container>
     </Modal>

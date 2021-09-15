@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { List } from "antd";
+import { Button, List } from "antd";
 import { Work } from "../../../../../../types/user";
-import { ListStyle } from "./StyledComponent";
-import { MinusCircleOutlined } from "@ant-design/icons";
+import { ListStyle, CompanyListFooter } from "./StyledComponent";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import React, { useCallback } from "react";
 
 interface CompanyListProps {
@@ -11,11 +11,12 @@ interface CompanyListProps {
   selectCompany: (id: string) => void;
 }
 
-const Container = styled.div`
+export const Container = styled.div`
   width: 30%;
   height: 100%;
   overflow-x: auto;
   border-right: 1px solid lightgray;
+  position: relative;
 `;
 const CompanyList = (props: CompanyListProps) => {
   const { companyList, removeCompany, selectCompany } = props;
@@ -47,6 +48,16 @@ const CompanyList = (props: CompanyListProps) => {
           </List.Item>
         )}
       />
+      <List.Item>
+        <Button
+          type="dashed"
+          onClick={() => {}}
+          style={{ marginBottom: "20px" }}
+          icon={<PlusOutlined />}
+        >
+          Add
+        </Button>
+      </List.Item>
     </Container>
   );
 };

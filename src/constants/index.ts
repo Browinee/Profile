@@ -5,7 +5,7 @@ export const WORKEXPERIENCE: Work[] = [
   {
     id: btoa("Frontend Engineer" + "UNISTAR" + "startData" + "endDate"),
     startDate: "2020-08",
-    endDate: "",
+    endDate: "2021-09",
     title: "Frontend Engineer",
     company: "UNISTAR",
     companyLogo: unistar,

@@ -3,3 +3,4 @@ export const RESUME_MAPS = {
   summary: "summary",
   experience: "experience",
 };
+export const dateFormat = "YYYY/MM/DD";
