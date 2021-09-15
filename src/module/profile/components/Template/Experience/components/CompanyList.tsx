@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button, List } from "antd";
 import { Work } from "../../../../../../types/user";
-import { ListStyle, CompanyListFooter } from "./StyledComponent";
+import { ListStyle } from "./StyledComponent";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import React, { useCallback } from "react";
 
@@ -24,7 +24,7 @@ const CompanyList = (props: CompanyListProps) => {
     (companyId: string) => {
       removeCompany(companyId);
     },
-    [companyList, removeCompany]
+    [removeCompany]
   );
   const selectCompanyHandler = (id: string) => {
     selectCompany(id);

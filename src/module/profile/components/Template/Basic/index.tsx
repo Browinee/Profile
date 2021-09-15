@@ -1,5 +1,4 @@
 import Modal from "../../../../../components/Modal";
-import { User } from "../../../../../types/user";
 import { Form, Input } from "antd";
 import React from "react";
 

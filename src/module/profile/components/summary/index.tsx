@@ -27,7 +27,7 @@ const Summary = (props: SummaryProps) => {
   const { summary, editHandler } = props;
   const clickHandler = useCallback(() => {
     editHandler(RESUME_MAPS.summary);
-  }, []);
+  }, [editHandler]);
   return (
     <>
       <Header>

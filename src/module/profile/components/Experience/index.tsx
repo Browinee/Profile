@@ -24,7 +24,7 @@ const Experience = (props: ExperienceProps) => {
   const { workExperience, editHandler } = props;
   const clickHandler = useCallback(() => {
     editHandler(RESUME_MAPS.experience);
-  }, []);
+  }, [editHandler]);
   return (
     <Container>
       <Header>

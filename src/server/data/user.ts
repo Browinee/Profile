@@ -1,6 +1,5 @@
 import { AuthForm } from "../../types/authForm";
 import { User } from "../../types/user";
-import LocalStorageDB, { USER_INFO } from "../../infra/localStorageDB";
 import { PERMISSION } from "../../module/auth/permissionList";
 import { SUMMARY, WORKEXPERIENCE } from "../../constants";
 import avatar from "../../assets/avatar.png";
@@ -16,16 +15,14 @@ let UserInfo: Omit<User, "token"> = {
   github: "https://github.com/Browinee/",
   summary: SUMMARY,
 };
-const persist = () => LocalStorageDB.save(USER_INFO, JSON.stringify(UserInfo));
-const load = () => Object.assign(UserInfo, LocalStorageDB.load(USER_INFO));
+// const persist = () => LocalStorageDB.save(USER_INFO, JSON.stringify(UserInfo));
+// const load = () => Object.assign(UserInfo, LocalStorageDB.load(USER_INFO));
 
-// initialize
-try {
-  load();
-} catch (error) {
-  persist();
-  // ignore json parse error
-}
+// try {
+//   load();
+// } catch (error) {
+//   persist();
+// }
 
 function validateUserForm({ username, password }: AuthForm) {
   if (username !== "admin" || password !== "admin") {

@@ -52,7 +52,7 @@ function InfoBlock(props: BaseInfoProps) {
   const { user, editHandler } = props;
   const clickHandler = useCallback(() => {
     editHandler(RESUME_MAPS.basic);
-  }, []);
+  }, [editHandler]);
   return (
     <Container>
       <Header>

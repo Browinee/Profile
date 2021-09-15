@@ -17,7 +17,6 @@ const CompanyInfo: React.FC<CompanyInfoProps> = (props) => {
   const { formRef, companyInfo } = props;
   const [localCompanyInfo, setLocalCompanyInfo] = useState(companyInfo);
   console.log("localCompanyInfo", localCompanyInfo);
-  const [form] = Form.useForm();
   const logoChangeHandler = (e: any) => {
     setLocalCompanyInfo((prev) => {
       return {

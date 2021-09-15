@@ -34,7 +34,6 @@ const DateInfo = styled.p``;
 const Pre = styled.pre`
   font-size: 1.6rem;
   overflow: hidden;
-  //white-space: pre-wrap;       /* Since CSS 2.1 */
   text-align: left;
   white-space: pre-line;
 `;

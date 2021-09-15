@@ -1,5 +1,4 @@
 import LocalStorageDB, { USER_INFO } from "../../infra/localStorageDB";
-import { User } from "../../types/user";
 
 interface FeatureToggleProps {
   children: any;

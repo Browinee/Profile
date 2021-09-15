@@ -1,7 +1,7 @@
-import { Work, WorkItem } from "../../../../../types/user";
+import { Work } from "../../../../../types/user";
 import { Container } from "./components/StyledComponent";
 import Modal from "../../../../../components/Modal";
-import { Form, Input } from "antd";
+import { Form } from "antd";
 import React, { useState } from "react";
 import CompanyList from "./components/CompanyList";
 import CompanyInfo from "./components/CompanyInfo";
@@ -11,6 +11,7 @@ interface ExperienceFormProps {
   cancelHandler: () => void;
   confirmHandler: (value: any) => void;
 }
+
 const DefaultCompanyInfo: Work = {
   id: "",
   company: "",
@@ -25,7 +26,7 @@ const companyListAdapter = (workExperience: Work[] = []) => {
 };
 
 const ExperienceForm = (props: ExperienceFormProps) => {
-  const { workExperience, cancelHandler, confirmHandler } = props;
+  const { workExperience, cancelHandler } = props;
   const [changingWork, setChangingWork] = useState(workExperience);
   const onCancelHandler = () => {
     cancelHandler();
