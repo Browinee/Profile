@@ -1,4 +1,5 @@
 import { Work } from "../../../../types/user";
+import { Card } from "antd";
 import styled from "styled-components";
 import Avatar from "../../../../components/Avatar";
 
@@ -23,24 +24,32 @@ const List = styled.ul`
 const CompanyInfo = styled.p`
   display: flex;
   align-items: center;
+
   span {
     display: inline-block;
     margin-right: 0.5rem;
   }
 `;
 const DateInfo = styled.p``;
-
-const ExperienceBLock = (props: Work) => {
+const Pre = styled.pre`
+  font-size: 1.6rem;
+  overflow: hidden;
+  //white-space: pre-wrap;       /* Since CSS 2.1 */
+  text-align: left;
+  white-space: pre-line;
+`;
+const Main = styled.main``;
+const ExperienceBLock = (work: Work) => {
   const {
     startDate = "",
     endDate = "",
     title = "",
     company = "",
     companyLogo = "",
-    description = [],
-  } = props;
+    description = "",
+  } = work;
   return (
-    <Container>
+    <Card>
       <Header>
         <CompanyInfo>
           <Avatar imageUrl={companyLogo} size={18} />
@@ -52,22 +61,10 @@ const ExperienceBLock = (props: Work) => {
           {startDate}~{endDate}
         </DateInfo>
       </Header>
-      <List>
-        {description.map((info) => {
-          const { title, item } = info;
-          return (
-            <li key={title}>
-              {title}
-              <List>
-                {item.map((list) => {
-                  return <li key={list}>{list}</li>;
-                })}
-              </List>
-            </li>
-          );
-        })}
-      </List>
-    </Container>
+      <Main>
+        <Pre>{description}</Pre>
+      </Main>
+    </Card>
   );
 };
 

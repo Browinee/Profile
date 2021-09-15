@@ -18,7 +18,7 @@ export interface Work {
   title: string;
   company: string;
   companyLogo: string;
-  description: WorkItem[];
+  description: string;
 }
 
 export interface WorkItem {

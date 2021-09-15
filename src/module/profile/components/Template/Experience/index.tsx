@@ -16,7 +16,7 @@ const DefaultCompanyInfo: Work = {
   company: "",
   companyLogo: "",
   title: "",
-  description: [],
+  description: "",
   startDate: new Date().toLocaleDateString(),
   endDate: new Date().toLocaleDateString(),
 };
