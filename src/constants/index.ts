@@ -1,11 +1,12 @@
 import {Work} from "../types/user";
 import unistar from "../assets/unistar-logo.png";
+import {v4 as uuidv4} from "uuid";
 
 export const WORKEXPERIENCE: Work[] = [
     {
-        id: btoa("Frontend EngineerUNISTAR2020-082020-09"),
+        id: uuidv4(),
         isCurrent: true,
-        startDate: "2020-08",
+        startDate: "2020-08-08",
         endDate: "",
         title: "Frontend Engineer",
         company: "UNISTAR",
@@ -38,9 +39,9 @@ export const WORKEXPERIENCE: Work[] = [
       `,
     },
     {
-        id: btoa("Frontend EngineerAMPOS2019-022020-06"),
-        startDate: "2019-02",
-        endDate: "2020-06",
+        id: uuidv4(),
+        startDate: "2019-02-02",
+        endDate: "2020-06-31",
         title: "Frontend Engineer",
         company: "AMPOS",
         companyLogo: unistar,

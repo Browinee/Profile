@@ -15,7 +15,7 @@ import {getBase64} from "../../utils/base64";
 import {DefaultCompanyInfo, RESUME_MAPS} from "./constants";
 import BasicForm from "./components/Template/Basic";
 import SummaryForm from "./components/Template/Summary";
-import {adapterBasic, adapterSummary, adapterWorkExperience} from "./adapter";
+import {adapterBasic, adapterSummary} from "./adapter";
 import ExperienceForm from "./components/Template/Experience";
 
 function Profile() {
@@ -50,7 +50,21 @@ function Profile() {
         } as User;
         updateUser(newUser);
     };
-
+    const onConfirmWorkHandler = (workId: string, workExperience: Work) => {
+        if (user) {
+            const isUpdated: boolean = !!user.workExperience.find((work: Work) => work.id === workId);
+            const newWorkExperience = isUpdated
+                ? user.workExperience.map(work => {
+                      return work.id === workId ? workExperience : work;
+                  })
+                : [workExperience, ...user.workExperience];
+            const newUser = {
+                ...user,
+                workExperience: newWorkExperience,
+            };
+            updateUser(newUser);
+        }
+    };
     return (
         <Container>
             <Basic>
@@ -81,7 +95,7 @@ function Profile() {
                 <SummaryForm summary={adapterSummary(user)} cancelHandler={onClose} confirmHandler={onConfirmHandler} />
             )}
             {modalType === RESUME_MAPS.experience && (
-                <ExperienceForm workExperience={selectedWork} cancelHandler={onClose} confirmHandler={onConfirmHandler} />
+                <ExperienceForm workExperience={selectedWork} cancelHandler={onClose} confirmHandler={onConfirmWorkHandler} />
             )}
         </Container>
     );

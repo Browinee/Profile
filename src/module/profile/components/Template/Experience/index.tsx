@@ -2,63 +2,65 @@ import {Work} from "../../../../../types/user";
 import {Container} from "./components/StyledComponent";
 import Modal from "../../../../../components/Modal";
 import {Button, DatePicker, Form, Input, Upload} from "antd";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {UploadOutlined} from "@ant-design/icons";
-import {dateFormat} from "../../../constants";
-import moment from "moment";
-
-const {RangePicker} = DatePicker;
+import {dateFormat, DefaultCompanyInfo} from "../../../constants";
+import moment, {Moment} from "moment";
+import {workAdapter} from "../../../adapter";
 
 interface ExperienceFormProps {
     workExperience: Work;
     cancelHandler: () => void;
-    confirmHandler: (value: any) => void;
+    confirmHandler: (workId: string, value: any) => void;
 }
 
+export interface FormProps extends Omit<Work, "startDate" | "endDate"> {
+    startDate: Moment;
+    endDate: Moment;
+}
+
+const transformDate = (workExperience: Work) => {
+    const {isCurrent} = workExperience;
+    return {
+        ...workExperience,
+        startDate: moment(workExperience.startDate, dateFormat),
+        endDate: moment(isCurrent ? new Date() : workExperience.startDate, dateFormat),
+    };
+};
+
 const ExperienceForm = (props: ExperienceFormProps) => {
-    const {workExperience, cancelHandler} = props;
-    const [localWorkExperience, setLocalWorkExperience] = useState(workExperience);
+    const {workExperience = DefaultCompanyInfo, cancelHandler, confirmHandler} = props;
+    console.log();
+    const [localWorkExperience, setLocalWorkExperience] = useState(transformDate(workExperience));
+    useEffect(() => {
+        setLocalWorkExperience(transformDate(workExperience));
+    }, [workExperience.id]);
+
     const [formRef] = Form.useForm();
     const onCancelHandler = () => {
         cancelHandler();
     };
     const onConfirmHandler = async () => {
         try {
-            // confirmHandler({ summary: formData });
+            await formRef.validateFields();
             const value = formRef.getFieldsValue();
             // parse Date
-            console.log("value", value);
+            const result = workAdapter(value);
+            confirmHandler(result.id, result);
             cancelHandler();
         } catch (e) {
             console.error("Form error", e);
         }
     };
-    // const removeCompany = (id: string) => {
-    //   const newChangingWork = changingWork.filter((work) => work.id !== id);
-    //   setChangingWork(newChangingWork);
-    // };
-    //
-    // const [selectedCompany, setSelectedCompany] = useState<Work | undefined>(
-    //   workExperience[0]
-    // );
-    // const selectCompany = (id: string) => {
-    //   const company = changingWork.find((work) => work.id === id);
-    //   setSelectedCompany(company);
-    //   console.log("company, compa, compay", company);
-    // };
 
     const logoChangeHandler = (e: any) => {
-        setLocalWorkExperience(prev => {
-            return {
-                ...prev,
-                companyLogo: e.file.thumbUrl,
-            };
-        });
+        return e.file.thumbUrl;
     };
     return (
         <Modal title={localWorkExperience.company} cancelHandler={onCancelHandler} confirmHandler={onConfirmHandler} width={600}>
             <Container>
                 <Form form={formRef} initialValues={localWorkExperience} requiredMark={true}>
+                    <Form.Item name="id" style={{display: "none"}}></Form.Item>
                     <Form.Item
                         name="company"
                         rules={[
@@ -83,29 +85,35 @@ const ExperienceForm = (props: ExperienceFormProps) => {
                         <Input allowClear bordered />
                     </Form.Item>
                     <Form.Item
-                        name="range-picker"
+                        name="startDate"
+                        label="From"
                         rules={[
                             {
-                                type: "array",
+                                type: "object",
                                 required: true,
                                 message: "Date(Required)",
                             },
                         ]}
                     >
-                        <RangePicker
-                            format={dateFormat}
-                            defaultValue={[
-                                moment(workExperience.startDate, dateFormat),
-                                workExperience.isCurrent
-                                    ? moment(new Date(), dateFormat)
-                                    : moment(workExperience.endDate, dateFormat),
-                            ]}
-                        />
+                        <DatePicker />
+                    </Form.Item>
+                    <Form.Item
+                        name="endDate"
+                        label="To"
+                        rules={[
+                            {
+                                type: "object",
+                                required: true,
+                                message: "Date(Required)",
+                            },
+                        ]}
+                    >
+                        <DatePicker />
                     </Form.Item>
                     <Form.Item name="companyLogo" getValueFromEvent={logoChangeHandler}>
                         <Upload name="logo" listType="picture" multiple={false}>
                             <Button icon={<UploadOutlined />}>
-                                {localWorkExperience.companyLogo === "" ? "Upload" : "Update"} Company Logo
+                                {workExperience.companyLogo === "" ? "Upload" : "Update"} Company Logo
                             </Button>
                         </Upload>
                     </Form.Item>
