@@ -33,13 +33,19 @@ function Profile() {
     const changeHandler = (info: UploadChangeParam) => {
         getBase64(info.file.originFileObj, imageUrl => updateImageHandler(imageUrl));
     };
+
     const [modalType, setModalType] = useState("");
     const [selectedWork, setSelectedWork] = useState<Work>(DefaultCompanyInfo);
-    const modalHandler = useCallback((type, workId) => {
-        setModalType(type);
-        const work = user?.workExperience.find(w => w.id === workId) || DefaultCompanyInfo;
-        setSelectedWork(work);
-    }, []);
+    const [isNew, setIsNew] = useState(false);
+    const modalHandler = useCallback(
+        (type: string, workId?: string | null) => {
+            setModalType(type);
+            const work = (user?.workExperience || []).find(w => w.id === workId) || DefaultCompanyInfo;
+            setIsNew(!!!workId);
+            setSelectedWork(work);
+        },
+        [user, setModalType, setSelectedWork]
+    );
     const onClose = useCallback(() => {
         setModalType("");
     }, []);
@@ -95,7 +101,12 @@ function Profile() {
                 <SummaryForm summary={adapterSummary(user)} cancelHandler={onClose} confirmHandler={onConfirmHandler} />
             )}
             {modalType === RESUME_MAPS.experience && (
-                <ExperienceForm workExperience={selectedWork} cancelHandler={onClose} confirmHandler={onConfirmWorkHandler} />
+                <ExperienceForm
+                    isNew={isNew}
+                    workExperience={selectedWork}
+                    cancelHandler={onClose}
+                    confirmHandler={onConfirmWorkHandler}
+                />
             )}
         </Container>
     );

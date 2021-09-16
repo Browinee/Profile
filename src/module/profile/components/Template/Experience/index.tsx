@@ -2,7 +2,7 @@ import {Work} from "../../../../../types/user";
 import {Container} from "./components/StyledComponent";
 import Modal from "../../../../../components/Modal";
 import {Button, Checkbox, DatePicker, Form, Input, Upload} from "antd";
-import React, {useCallback, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import {UploadOutlined} from "@ant-design/icons";
 import {dateFormat, DefaultCompanyInfo} from "../../../constants";
 import moment, {Moment} from "moment";
@@ -15,6 +15,7 @@ interface ExperienceFormProps {
     workExperience: Work;
     cancelHandler: () => void;
     confirmHandler: (workId: string, value: any) => void;
+    isNew?: boolean;
 }
 
 export interface FormProps extends Work {
@@ -33,7 +34,7 @@ const transformDate = (workExperience: Work) => {
 };
 
 const ExperienceForm = (props: ExperienceFormProps) => {
-    const {workExperience = DefaultCompanyInfo, cancelHandler, confirmHandler} = props;
+    const {workExperience = DefaultCompanyInfo, cancelHandler, confirmHandler, isNew = false} = props;
     const [localWorkExperience, setLocalWorkExperience] = useState(transformDate(workExperience));
 
     const [formRef] = Form.useForm();
@@ -43,7 +44,6 @@ const ExperienceForm = (props: ExperienceFormProps) => {
     const onConfirmHandler = useCallback(async () => {
         try {
             const value = formRef.getFieldsValue();
-            console.log("value---", value);
             await formRef.validateFields();
             // parse Date
             const result = workAdapter({...localWorkExperience, ...value});
@@ -52,7 +52,7 @@ const ExperienceForm = (props: ExperienceFormProps) => {
         } catch (e) {
             console.error("Form error", e);
         }
-    }, [confirmHandler, workAdapter]);
+    }, [confirmHandler, workAdapter, localWorkExperience]);
 
     const logoChangeHandler = useCallback((e: any) => {
         return e.file.thumbUrl;
@@ -71,22 +71,28 @@ const ExperienceForm = (props: ExperienceFormProps) => {
         },
         [setLocalWorkExperience]
     );
-    const ModalFooter = useMemo(
-        () => [
-            <Button key="delete" danger>
-                Delete
-            </Button>,
+    const ModalFooter = useMemo(() => {
+        return [
+            !isNew && (
+                <Button key="delete" danger>
+                    Delete
+                </Button>
+            ),
             <Button key="cancel" onClick={onCancelHandler}>
                 Cancel
             </Button>,
             <Button key="confirm" type="primary" onClick={onConfirmHandler}>
                 Confirm
             </Button>,
-        ],
-        [onCancelHandler, onConfirmHandler]
-    );
+        ];
+    }, [onCancelHandler, onConfirmHandler]);
     return (
-        <Modal title={localWorkExperience.company} width={600} footer={ModalFooter}>
+        <Modal
+            cancelHandler={onCancelHandler}
+            title={localWorkExperience.company || "New Experience"}
+            width={600}
+            footer={ModalFooter}
+        >
             <Container>
                 <Form form={formRef} initialValues={localWorkExperience} requiredMark={true}>
                     <Form.Item name="id" style={{display: "none"}}></Form.Item>

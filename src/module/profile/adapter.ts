@@ -24,14 +24,14 @@ export const adapterWorkExperience = (userData: User | null) => {
     return workExperience;
 };
 export const workAdapter = (workExperience: FormProps): Work => {
-    console.log("workExperience", workExperience);
-    const {id, isCurrent, period} = workExperience;
+    const {id, isCurrent, period, ...rest} = workExperience;
     const transformedStartDate = moment(period[0]).format(dateFormat);
     const transformedEndDate = isCurrent ? "" : moment(period[1]).format(dateFormat);
     return {
-        ...workExperience,
+        ...rest,
         startDate: transformedStartDate,
         endDate: transformedEndDate,
         id: id === "" ? uuidv4() : id,
+        isCurrent,
     };
 };
