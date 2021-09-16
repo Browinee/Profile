@@ -7,10 +7,11 @@ interface ModalProps {
     confirmHandler?: (param: any) => void;
     width?: number;
     footer?: ReactNode;
+    height?: number;
 }
 
 const Modal: React.FC<ModalProps> = props => {
-    const {title, children, cancelHandler = () => {}, confirmHandler = () => {}, width = 500, footer} = props;
+    const {height = 500, title, children, cancelHandler = () => {}, confirmHandler = () => {}, width = 500, footer} = props;
     return (
         <AntdModal
             title={title}
@@ -18,7 +19,7 @@ const Modal: React.FC<ModalProps> = props => {
             onOk={confirmHandler}
             onCancel={cancelHandler}
             width={width}
-            bodyStyle={{overflowX: "auto", height: "500px"}}
+            bodyStyle={{overflowX: "auto", height: `${height}px`}}
             footer={footer}
         >
             {children}

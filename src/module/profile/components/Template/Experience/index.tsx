@@ -15,6 +15,7 @@ interface ExperienceFormProps {
     workExperience: Work;
     cancelHandler: () => void;
     confirmHandler: (workId: string, value: any) => void;
+    deleteHandler: (workId: string) => void;
     isNew?: boolean;
 }
 
@@ -34,7 +35,7 @@ const transformDate = (workExperience: Work) => {
 };
 
 const ExperienceForm = (props: ExperienceFormProps) => {
-    const {workExperience = DefaultCompanyInfo, cancelHandler, confirmHandler, isNew = false} = props;
+    const {workExperience = DefaultCompanyInfo, cancelHandler, confirmHandler, isNew = false, deleteHandler} = props;
     const [localWorkExperience, setLocalWorkExperience] = useState(transformDate(workExperience));
 
     const [formRef] = Form.useForm();
@@ -71,10 +72,22 @@ const ExperienceForm = (props: ExperienceFormProps) => {
         },
         [setLocalWorkExperience]
     );
+
+    const [isDeleteNoti, setIsDeleteNoti] = useState(false);
+    const toggleConfirmDeleteHandler = useCallback(() => {
+        setIsDeleteNoti(prev => !prev);
+    }, [setIsDeleteNoti]);
+
+    const onConfirmDeleteHandler = useCallback(() => {
+        deleteHandler(workExperience.id);
+        toggleConfirmDeleteHandler();
+        onCancelHandler();
+    }, [workExperience.id, toggleConfirmDeleteHandler, onCancelHandler]);
+
     const ModalFooter = useMemo(() => {
         return [
             !isNew && (
-                <Button key="delete" danger>
+                <Button key="delete" danger onClick={toggleConfirmDeleteHandler}>
                     Delete
                 </Button>
             ),
@@ -87,70 +100,77 @@ const ExperienceForm = (props: ExperienceFormProps) => {
         ];
     }, [onCancelHandler, onConfirmHandler]);
     return (
-        <Modal
-            cancelHandler={onCancelHandler}
-            title={localWorkExperience.company || "New Experience"}
-            width={600}
-            footer={ModalFooter}
-        >
-            <Container>
-                <Form form={formRef} initialValues={localWorkExperience} requiredMark={true}>
-                    <Form.Item name="id" style={{display: "none"}}></Form.Item>
-                    <Form.Item
-                        name="company"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please enter company name",
-                            },
-                        ]}
-                    >
-                        <Input allowClear bordered placeholder="Company(Required)." />
-                    </Form.Item>
-                    <Form.Item
-                        name="period"
-                        rules={[
-                            {
-                                type: "array",
-                                required: true,
-                                message: "Please select time!",
-                            },
-                        ]}
-                    >
-                        <RangePicker
-                            defaultValue={localWorkExperience.period}
-                            disabled={[false, localWorkExperience.isCurrent]}
-                        />
-                    </Form.Item>
-                    <Checkbox onChange={checkHandler} checked={localWorkExperience.isCurrent}>
-                        I currently work here.
-                    </Checkbox>
-                    <Form.Item name="companyLogo" getValueFromEvent={logoChangeHandler}>
-                        <Upload name="logo" listType="picture" multiple={false}>
-                            <Button icon={<UploadOutlined />}>
-                                {workExperience.companyLogo === "" ? "Upload" : "Update"} Company Logo
-                            </Button>
-                        </Upload>
-                    </Form.Item>
-                    <Form.Item
-                        name={"description"}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please describe your experience.",
-                            },
-                        ]}
-                    >
-                        <Input.TextArea
-                            allowClear
-                            bordered
-                            placeholder={"Describe your experience.(Required)"}
-                            autoSize={{minRows: 10, maxRows: 20}}
-                        />
-                    </Form.Item>
-                </Form>
-            </Container>
-        </Modal>
+        <>
+            <Modal
+                cancelHandler={onCancelHandler}
+                title={localWorkExperience.company || "New Experience"}
+                width={600}
+                footer={ModalFooter}
+            >
+                <Container>
+                    <Form form={formRef} initialValues={localWorkExperience} requiredMark={true}>
+                        <Form.Item name="id" style={{display: "none"}}></Form.Item>
+                        <Form.Item
+                            name="company"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter company name",
+                                },
+                            ]}
+                        >
+                            <Input allowClear bordered placeholder="Company(Required)." />
+                        </Form.Item>
+                        <Form.Item
+                            name="period"
+                            rules={[
+                                {
+                                    type: "array",
+                                    required: true,
+                                    message: "Please select time!",
+                                },
+                            ]}
+                        >
+                            <RangePicker
+                                defaultValue={localWorkExperience.period}
+                                disabled={[false, localWorkExperience.isCurrent]}
+                            />
+                        </Form.Item>
+                        <Checkbox onChange={checkHandler} checked={localWorkExperience.isCurrent}>
+                            I currently work here.
+                        </Checkbox>
+                        <Form.Item name="companyLogo" getValueFromEvent={logoChangeHandler}>
+                            <Upload name="logo" listType="picture" multiple={false}>
+                                <Button icon={<UploadOutlined />}>
+                                    {workExperience.companyLogo === "" ? "Upload" : "Update"} Company Logo
+                                </Button>
+                            </Upload>
+                        </Form.Item>
+                        <Form.Item
+                            name={"description"}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please describe your experience.",
+                                },
+                            ]}
+                        >
+                            <Input.TextArea
+                                allowClear
+                                bordered
+                                placeholder={"Describe your experience.(Required)"}
+                                autoSize={{minRows: 10, maxRows: 20}}
+                            />
+                        </Form.Item>
+                    </Form>
+                </Container>
+            </Modal>
+            {isDeleteNoti && (
+                <Modal height={100} title="" cancelHandler={toggleConfirmDeleteHandler} confirmHandler={onConfirmDeleteHandler}>
+                    Are you sure you want to delte?
+                </Modal>
+            )}
+        </>
     );
 };
 

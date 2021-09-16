@@ -41,7 +41,7 @@ function Profile() {
         (type: string, workId?: string | null) => {
             setModalType(type);
             const work = (user?.workExperience || []).find(w => w.id === workId) || DefaultCompanyInfo;
-            setIsNew(!!!workId);
+            setIsNew(!workId);
             setSelectedWork(work);
         },
         [user, setModalType, setSelectedWork]
@@ -67,6 +67,15 @@ function Profile() {
             const newUser = {
                 ...user,
                 workExperience: newWorkExperience,
+            };
+            updateUser(newUser);
+        }
+    };
+    const onDeleteHandler = (workId: string) => {
+        if (user) {
+            const newUser = {
+                ...user,
+                workExperience: user.workExperience.filter(work => work.id !== workId),
             };
             updateUser(newUser);
         }
@@ -106,6 +115,7 @@ function Profile() {
                     workExperience={selectedWork}
                     cancelHandler={onClose}
                     confirmHandler={onConfirmWorkHandler}
+                    deleteHandler={onDeleteHandler}
                 />
             )}
         </Container>
