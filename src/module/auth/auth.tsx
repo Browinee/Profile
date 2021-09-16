@@ -18,7 +18,5 @@ export const FeatureToggle = (props: FeatureToggleProps) => {
   const { permissions = [], children } = props;
   const userInfo = LocalStorageDB.load(USER_INFO);
   if (typeof userInfo === "string") return null;
-  return isValidPermission(permissions, userInfo.user.permission)
-    ? children
-    : null;
+  return isValidPermission(permissions, userInfo.permission) ? children : null;
 };

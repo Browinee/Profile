@@ -20,7 +20,7 @@ const handlers = [
         ctx.json({ status: 400, message: error.message })
       );
     }
-    return res(ctx.json({ user }));
+    return res(ctx.json({ ...user }));
   }),
 ];
 
