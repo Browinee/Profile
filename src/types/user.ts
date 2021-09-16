@@ -19,6 +19,7 @@ export interface Work {
   company: string;
   companyLogo: string;
   description: string;
+  isCurrent: boolean;
 }
 
 export interface WorkItem {

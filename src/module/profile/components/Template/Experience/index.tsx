@@ -20,6 +20,7 @@ const DefaultCompanyInfo: Work = {
   description: "",
   startDate: new Date().toLocaleDateString(),
   endDate: new Date().toLocaleDateString(),
+  isCurrent: false,
 };
 const companyListAdapter = (workExperience: Work[] = []) => {
   return workExperience.map((work) => ({ id: work.id, company: work.company }));
