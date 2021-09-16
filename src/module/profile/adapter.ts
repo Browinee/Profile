@@ -25,9 +25,9 @@ export const adapterWorkExperience = (userData: User | null) => {
 };
 export const workAdapter = (workExperience: FormProps): Work => {
     console.log("workExperience", workExperience);
-    const {id, isCurrent, startDate, endDate} = workExperience;
-    const transformedStartDate = moment(startDate).format(dateFormat);
-    const transformedEndDate = isCurrent ? "PRESENT" : moment(endDate).format(dateFormat);
+    const {id, isCurrent, period} = workExperience;
+    const transformedStartDate = moment(period[0]).format(dateFormat);
+    const transformedEndDate = isCurrent ? "" : moment(period[1]).format(dateFormat);
     return {
         ...workExperience,
         startDate: transformedStartDate,

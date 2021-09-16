@@ -1,12 +1,15 @@
 import {Work} from "../../../../../types/user";
 import {Container} from "./components/StyledComponent";
 import Modal from "../../../../../components/Modal";
-import {Button, DatePicker, Form, Input, Upload} from "antd";
-import React, {useEffect, useState} from "react";
+import {Button, Checkbox, DatePicker, Form, Input, Upload} from "antd";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {UploadOutlined} from "@ant-design/icons";
 import {dateFormat, DefaultCompanyInfo} from "../../../constants";
 import moment, {Moment} from "moment";
 import {workAdapter} from "../../../adapter";
+import {CheckboxChangeEvent} from "antd/es/checkbox";
+
+const {RangePicker} = DatePicker;
 
 interface ExperienceFormProps {
     workExperience: Work;
@@ -14,50 +17,76 @@ interface ExperienceFormProps {
     confirmHandler: (workId: string, value: any) => void;
 }
 
-export interface FormProps extends Omit<Work, "startDate" | "endDate"> {
-    startDate: Moment;
-    endDate: Moment;
+export interface FormProps extends Work {
+    period: [Moment, Moment];
 }
 
 const transformDate = (workExperience: Work) => {
     const {isCurrent} = workExperience;
     return {
         ...workExperience,
-        startDate: moment(workExperience.startDate, dateFormat),
-        endDate: moment(isCurrent ? new Date() : workExperience.startDate, dateFormat),
+        period: [
+            moment(workExperience.startDate, dateFormat),
+            moment(isCurrent ? new Date() : workExperience.startDate, dateFormat),
+        ] as [Moment, Moment],
     };
 };
 
 const ExperienceForm = (props: ExperienceFormProps) => {
     const {workExperience = DefaultCompanyInfo, cancelHandler, confirmHandler} = props;
-    console.log();
     const [localWorkExperience, setLocalWorkExperience] = useState(transformDate(workExperience));
-    useEffect(() => {
-        setLocalWorkExperience(transformDate(workExperience));
-    }, [workExperience.id]);
 
     const [formRef] = Form.useForm();
-    const onCancelHandler = () => {
+    const onCancelHandler = useCallback(() => {
         cancelHandler();
-    };
-    const onConfirmHandler = async () => {
+    }, []);
+    const onConfirmHandler = useCallback(async () => {
         try {
-            await formRef.validateFields();
             const value = formRef.getFieldsValue();
+            console.log("value---", value);
+            await formRef.validateFields();
             // parse Date
-            const result = workAdapter(value);
+            const result = workAdapter({...localWorkExperience, ...value});
             confirmHandler(result.id, result);
             cancelHandler();
         } catch (e) {
             console.error("Form error", e);
         }
-    };
+    }, [confirmHandler, workAdapter]);
 
-    const logoChangeHandler = (e: any) => {
+    const logoChangeHandler = useCallback((e: any) => {
         return e.file.thumbUrl;
-    };
+    }, []);
+    const checkHandler = useCallback(
+        (e: CheckboxChangeEvent) => {
+            const checked = e.target.checked;
+            setLocalWorkExperience(prev => {
+                const period = prev.period;
+                return {
+                    ...prev,
+                    isCurrent: checked,
+                    period: [period[0], moment(new Date(), dateFormat)],
+                };
+            });
+        },
+        [setLocalWorkExperience]
+    );
+    const ModalFooter = useMemo(
+        () => [
+            <Button key="delete" danger>
+                Delete
+            </Button>,
+            <Button key="cancel" onClick={onCancelHandler}>
+                Cancel
+            </Button>,
+            <Button key="confirm" type="primary" onClick={onConfirmHandler}>
+                Confirm
+            </Button>,
+        ],
+        [onCancelHandler, onConfirmHandler]
+    );
     return (
-        <Modal title={localWorkExperience.company} cancelHandler={onCancelHandler} confirmHandler={onConfirmHandler} width={600}>
+        <Modal title={localWorkExperience.company} width={600} footer={ModalFooter}>
             <Container>
                 <Form form={formRef} initialValues={localWorkExperience} requiredMark={true}>
                     <Form.Item name="id" style={{display: "none"}}></Form.Item>
@@ -72,44 +101,24 @@ const ExperienceForm = (props: ExperienceFormProps) => {
                     >
                         <Input allowClear bordered placeholder="Company(Required)." />
                     </Form.Item>
-
                     <Form.Item
-                        name="title"
+                        name="period"
                         rules={[
                             {
+                                type: "array",
                                 required: true,
-                                message: "Title(Required)",
+                                message: "Please select time!",
                             },
                         ]}
                     >
-                        <Input allowClear bordered />
+                        <RangePicker
+                            defaultValue={localWorkExperience.period}
+                            disabled={[false, localWorkExperience.isCurrent]}
+                        />
                     </Form.Item>
-                    <Form.Item
-                        name="startDate"
-                        label="From"
-                        rules={[
-                            {
-                                type: "object",
-                                required: true,
-                                message: "Date(Required)",
-                            },
-                        ]}
-                    >
-                        <DatePicker />
-                    </Form.Item>
-                    <Form.Item
-                        name="endDate"
-                        label="To"
-                        rules={[
-                            {
-                                type: "object",
-                                required: true,
-                                message: "Date(Required)",
-                            },
-                        ]}
-                    >
-                        <DatePicker />
-                    </Form.Item>
+                    <Checkbox onChange={checkHandler} checked={localWorkExperience.isCurrent}>
+                        I currently work here.
+                    </Checkbox>
                     <Form.Item name="companyLogo" getValueFromEvent={logoChangeHandler}>
                         <Upload name="logo" listType="picture" multiple={false}>
                             <Button icon={<UploadOutlined />}>
