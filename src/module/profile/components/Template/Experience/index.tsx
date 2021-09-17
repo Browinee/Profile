@@ -49,7 +49,11 @@ const ExperienceForm = (props: ExperienceFormProps) => {
             await formRef.validateFields();
             const value = formRef.getFieldsValue();
             // hack for antd
-            const result = workAdapter({...localWorkExperience, ...value, companyLogo: localWorkExperience.companyLogo});
+            const result = workAdapter({
+                ...localWorkExperience,
+                ...value,
+                companyLogo: localWorkExperience.companyLogo,
+            });
             confirmHandler(result.id, result);
             cancelHandler();
         } catch (e) {
@@ -144,9 +148,10 @@ const ExperienceForm = (props: ExperienceFormProps) => {
                                 },
                             ]}
                         >
-                            <Input allowClear bordered placeholder="Company(Required)." />
+                            <Input allowClear bordered placeholder="Title(Required)." />
                         </Form.Item>
                         <Form.Item
+                            style={{marginBottom: "1rem"}}
                             name="period"
                             rules={[
                                 {
@@ -160,10 +165,13 @@ const ExperienceForm = (props: ExperienceFormProps) => {
                                 defaultValue={localWorkExperience.period}
                                 disabled={[false, localWorkExperience.isCurrent]}
                             />
+                            <Form.Item style={{marginBottom: "1rem"}}>
+                                <Checkbox onChange={checkHandler} checked={localWorkExperience.isCurrent}>
+                                    I currently work here.
+                                </Checkbox>
+                            </Form.Item>
                         </Form.Item>
-                        <Checkbox onChange={checkHandler} checked={localWorkExperience.isCurrent}>
-                            I currently work here.
-                        </Checkbox>
+
                         <Form.Item name="companyLogo" getValueFromEvent={onUploadHandler}>
                             <Upload name="logo" listType="picture" multiple={false} action={""}>
                                 <Button icon={<UploadOutlined />}>
@@ -192,7 +200,7 @@ const ExperienceForm = (props: ExperienceFormProps) => {
             </Modal>
             {isDeleteNoti && (
                 <Modal height={100} title="" cancelHandler={toggleConfirmDeleteHandler} confirmHandler={onConfirmDeleteHandler}>
-                    Are you sure you want to delte?
+                    Are you sure you want to delete?
                 </Modal>
             )}
         </>
