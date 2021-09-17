@@ -30,7 +30,7 @@ function Profile() {
         },
         [user, updateUser]
     );
-    const changeHandler = (info: UploadChangeParam) => {
+    const uploadAvatarHandler = (info: UploadChangeParam) => {
         getBase64(info.file.originFileObj, imageUrl => updateImageHandler(imageUrl));
     };
 
@@ -57,6 +57,7 @@ function Profile() {
         updateUser(newUser);
     };
     const onConfirmWorkHandler = (workId: string, workExperience: Work) => {
+        console.log("workId", {workId, workExperience});
         if (user) {
             const isUpdated: boolean = !!user.workExperience.find((work: Work) => work.id === workId);
             const newWorkExperience = isUpdated
@@ -88,7 +89,7 @@ function Profile() {
                         <Avatar imageUrl={user?.avatar || ""} />
                     </FeatureToggle>
                     <FeatureToggle permissions={[PERMISSION_MAP.AVATAR_EDIT]}>
-                        <Upload name="file" onChange={changeHandler} showUploadList={false} action="">
+                        <Upload name="file" onChange={uploadAvatarHandler} showUploadList={false} action="">
                             <Button icon={<UploadOutlined />}>Click to Upload</Button>
                         </Upload>
                     </FeatureToggle>

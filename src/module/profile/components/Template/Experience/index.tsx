@@ -8,6 +8,8 @@ import {dateFormat, DefaultCompanyInfo} from "../../../constants";
 import moment, {Moment} from "moment";
 import {workAdapter} from "../../../adapter";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
+import {UploadChangeParam} from "antd/lib/upload/interface";
+import {getBase64} from "../../../../../utils/base64";
 
 const {RangePicker} = DatePicker;
 
@@ -44,10 +46,10 @@ const ExperienceForm = (props: ExperienceFormProps) => {
     }, []);
     const onConfirmHandler = useCallback(async () => {
         try {
-            const value = formRef.getFieldsValue();
             await formRef.validateFields();
-            // parse Date
-            const result = workAdapter({...localWorkExperience, ...value});
+            const value = formRef.getFieldsValue();
+            // hack for antd
+            const result = workAdapter({...localWorkExperience, ...value, companyLogo: localWorkExperience.companyLogo});
             confirmHandler(result.id, result);
             cancelHandler();
         } catch (e) {
@@ -55,9 +57,6 @@ const ExperienceForm = (props: ExperienceFormProps) => {
         }
     }, [confirmHandler, workAdapter, localWorkExperience]);
 
-    const logoChangeHandler = useCallback((e: any) => {
-        return e.file.thumbUrl;
-    }, []);
     const checkHandler = useCallback(
         (e: CheckboxChangeEvent) => {
             const checked = e.target.checked;
@@ -99,6 +98,21 @@ const ExperienceForm = (props: ExperienceFormProps) => {
             </Button>,
         ];
     }, [onCancelHandler, onConfirmHandler]);
+
+    const onUploadHandler = useCallback(
+        (info: UploadChangeParam) => {
+            return getBase64(info.file.originFileObj, imageUrl => {
+                setLocalWorkExperience(prev => {
+                    return {
+                        ...prev,
+                        companyLogo: imageUrl || "",
+                    };
+                });
+            });
+        },
+        [setLocalWorkExperience, getBase64]
+    );
+
     return (
         <>
             <Modal
@@ -122,6 +136,17 @@ const ExperienceForm = (props: ExperienceFormProps) => {
                             <Input allowClear bordered placeholder="Company(Required)." />
                         </Form.Item>
                         <Form.Item
+                            name="title"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter title.",
+                                },
+                            ]}
+                        >
+                            <Input allowClear bordered placeholder="Company(Required)." />
+                        </Form.Item>
+                        <Form.Item
                             name="period"
                             rules={[
                                 {
@@ -139,8 +164,8 @@ const ExperienceForm = (props: ExperienceFormProps) => {
                         <Checkbox onChange={checkHandler} checked={localWorkExperience.isCurrent}>
                             I currently work here.
                         </Checkbox>
-                        <Form.Item name="companyLogo" getValueFromEvent={logoChangeHandler}>
-                            <Upload name="logo" listType="picture" multiple={false}>
+                        <Form.Item name="companyLogo" getValueFromEvent={onUploadHandler}>
+                            <Upload name="logo" listType="picture" multiple={false} action={""}>
                                 <Button icon={<UploadOutlined />}>
                                     {workExperience.companyLogo === "" ? "Upload" : "Update"} Company Logo
                                 </Button>
