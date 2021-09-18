@@ -1,4 +1,12 @@
-import {AvatarContainer, Bar, Basic, BasicInfo, Container, WorkExperience} from "./components/styleComponents";
+import {
+    AvatarContainer,
+    Bar,
+    Basic,
+    BasicInfo,
+    Container,
+    StyledSidebarButton,
+    WorkExperience,
+} from "./components/styleComponents";
 import {useAuth} from "../auth/context/auth-context";
 import Avatar from "../../components/Avatar";
 import InfoBlock from "./components/InfoBlock";
@@ -9,7 +17,7 @@ import {User, Work} from "../../types/user";
 import {FeatureToggle} from "../auth/auth";
 import {PERMISSION_MAP} from "../auth/permissionList";
 import {UploadOutlined} from "@ant-design/icons";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {UploadChangeParam} from "antd/lib/upload/interface";
 import {getBase64} from "../../utils/base64";
 import {DefaultCompanyInfo, RESUME_MAPS} from "./constants";
@@ -17,6 +25,10 @@ import BasicForm from "./components/Template/Basic";
 import SummaryForm from "./components/Template/Summary";
 import {adapterBasic, adapterSummary} from "./adapter";
 import ExperienceForm from "./components/Template/Experience";
+import {ArrowRightSVGICON} from "../../components/Aarrow";
+import {breakpoints} from "../../theme/theme";
+
+const QUERY = `(max-width: ${breakpoints.md})`;
 
 function Profile() {
     const {user, updateUser} = useAuth();
@@ -81,10 +93,26 @@ function Profile() {
             updateUser(newUser);
         }
     };
+
+    const [showBasic, setShowBasic] = useState(true);
+    const showBasicHandler = () => {
+        setShowBasic(prev => !prev);
+    };
+    const matchMediaHandler = useCallback(() => {
+        const isMatched = window.matchMedia(QUERY).matches;
+        setShowBasic(!isMatched);
+    }, [setShowBasic, showBasic]);
+    useEffect(() => {
+        window.addEventListener("resize", matchMediaHandler);
+        return () => {
+            window.removeEventListener("resize", matchMediaHandler);
+        };
+    }, []);
+    console.log("show", showBasic);
     return (
         <Container>
-            <Basic>
-                <AvatarContainer>
+            <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
+                <AvatarContainer className="avatar-container">
                     <FeatureToggle permissions={[PERMISSION_MAP.AVATAR_VIEW]}>
                         <Avatar imageUrl={user?.avatar || ""} />
                     </FeatureToggle>
@@ -119,6 +147,9 @@ function Profile() {
                     deleteHandler={onDeleteHandler}
                 />
             )}
+            <StyledSidebarButton onClick={showBasicHandler} showBasic={showBasic}>
+                <ArrowRightSVGICON />
+            </StyledSidebarButton>
         </Container>
     );
 }

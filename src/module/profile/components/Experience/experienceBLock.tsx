@@ -14,19 +14,8 @@ const Header = styled.header`
     justify-content: space-between;
     font-size: 1.8rem;
 `;
-// const Container = styled.div`
-//   width: 100%;
-//   height: 100%;
-// `;
-// const List = styled.ul`
-//   padding: 1rem 1.6rem 0 2rem;
-//   font-size: 13px;
-//
-//   li {
-//     padding-bottom: 12px;
-//   }
-// `;
-const CompanyInfo = styled.p`
+
+const CompanyInfo = styled.div`
     display: flex;
     align-items: center;
 
@@ -36,7 +25,11 @@ const CompanyInfo = styled.p`
     }
 `;
 const DateInfo = styled.p`
-    letter-spacing: 0.2rem;
+    font-size: 1.5rem;
+`;
+const Title = styled.div`
+    font-size: 1.5rem;
+    margin-top: 1rem;
 `;
 const Pre = styled.pre`
     font-size: 1.6rem;
@@ -81,13 +74,13 @@ const ExperienceBLock = (props: ExperienceBLockProps) => {
                 <CompanyInfo>
                     <Avatar imageUrl={companyLogo} size={18} />
                     <span>{company}</span>
-                    <span>:</span>
-                    <span>{title}</span>
                 </CompanyInfo>
+
                 <DateInfo>
                     {startDate}~{isCurrent ? "PRESENT" : endDate}
                 </DateInfo>
             </Header>
+            <Title>Title: {title}</Title>
             <Main>
                 <Pre>{description}</Pre>
             </Main>

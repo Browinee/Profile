@@ -18,6 +18,7 @@ const SummaryList = styled.ul`
 
     li {
         padding-bottom: 12px;
+        line-height: 1.3;
     }
 `;
 const Header = styled.h1`

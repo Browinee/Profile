@@ -17,6 +17,8 @@ const Header = styled.header`
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
 `;
 const Container = styled.div`
     width: 100%;

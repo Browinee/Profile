@@ -37,8 +37,8 @@ const Content = styled.ul`
         span {
             display: inline-block;
 
-            ${down("sm")} {
-                width: 120px;
+            ${down("md")} {
+                width: 140px;
                 margin-top: 0.5rem;
                 overflow: hidden;
                 white-space: nowrap;
