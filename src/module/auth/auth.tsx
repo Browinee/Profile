@@ -1,22 +1,17 @@
-import LocalStorageDB, { USER_INFO } from "../../infra/localStorageDB";
+import LocalStorageDB, {USER_INFO} from "../../infra/localStorageDB";
 
 interface FeatureToggleProps {
-  children: any;
-  permissions: string[];
+    children: any;
+    permissions: string[];
 }
 
-const isValidPermission = (
-  permissions: string[] = [],
-  userPermission: string[] = []
-): boolean => {
-  return !!permissions.filter((permission) =>
-    userPermission.includes(permission)
-  ).length;
+const isValidPermission = (permissions: string[] = [], userPermission: string[] = []): boolean => {
+    return !!permissions.filter(permission => userPermission.includes(permission)).length;
 };
 
 export const FeatureToggle = (props: FeatureToggleProps) => {
-  const { permissions = [], children } = props;
-  const userInfo = LocalStorageDB.load(USER_INFO);
-  if (typeof userInfo === "string") return null;
-  return isValidPermission(permissions, userInfo.permission) ? children : null;
+    const {permissions = [], children} = props;
+    const userInfo = LocalStorageDB.load(USER_INFO);
+    if (!userInfo) return null;
+    return isValidPermission(permissions, userInfo.permission) ? children : null;
 };

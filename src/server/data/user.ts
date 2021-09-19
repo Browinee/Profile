@@ -32,10 +32,10 @@ function validateUserForm({username, password}: AuthForm) {
 }
 
 export default class UserDB {
-    static async authenticate({username, password}: AuthForm): Promise<User | null> {
+    static async authenticate({username, password}: AuthForm): Promise<{userInfo: User; token: string} | null> {
         validateUserForm({username, password});
-        const useInfo = LocalStorageDB.load(SERVER_USER_INFO);
-        return {...useInfo, token: btoa(useInfo.id)};
+        const userInfo = LocalStorageDB.load(SERVER_USER_INFO) as User;
+        return {userInfo, token: btoa(userInfo.id)};
     }
 
     static async save(userInfo: User): Promise<User> {

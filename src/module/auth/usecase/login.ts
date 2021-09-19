@@ -1,12 +1,18 @@
-import { AuthForm } from "../../../types/authForm";
+import {AuthForm} from "../../../types/authForm";
 import http from "../../../infra/http";
-import { User } from "../../../types/user";
-import LocalStorageDB, { USER_INFO } from "../../../infra/localStorageDB";
+import {User} from "../../../types/user";
+import LocalStorageDB, {ACCESS_TOKEN, USER_INFO} from "../../../infra/localStorageDB";
 
+export interface LoginResponseProps {
+    userInfo: User;
+    token: string;
+}
 const LoginService = (userInfo: AuthForm): Promise<User> => {
-  return http.post("/login", userInfo).then((user) => {
-    LocalStorageDB.save(USER_INFO, JSON.stringify(user as unknown as User));
-    return user as unknown as User;
-  });
+    return http.post("/login", userInfo).then(loginResponse => {
+        const {userInfo, token} = loginResponse as unknown as LoginResponseProps;
+        LocalStorageDB.save(USER_INFO, JSON.stringify(userInfo as unknown as User));
+        LocalStorageDB.save(ACCESS_TOKEN, token);
+        return userInfo;
+    });
 };
 export default LoginService;

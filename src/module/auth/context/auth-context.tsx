@@ -1,10 +1,10 @@
-import React, {ReactNode, useContext} from "react";
+import React, {ReactNode, useCallback, useContext} from "react";
 import {User} from "../../../types/user";
 import {AuthForm} from "../../../types/authForm";
 import useAsync from "../../../hooks/useAsync";
 import Login from "../usecase/login";
 import Logout from "../usecase/logout";
-import LocalStorageDB, {USER_INFO} from "../../../infra/localStorageDB";
+import LocalStorageDB, {ACCESS_TOKEN, USER_INFO} from "../../../infra/localStorageDB";
 import useMount from "../../../hooks/useMount";
 
 interface AuthContextProps {
@@ -19,18 +19,22 @@ interface AuthContextProps {
 const AuthContext = React.createContext<AuthContextProps | undefined>(undefined);
 AuthContext.displayName = "AuthContext";
 
-// const bootstrapUser = async () => {
-//   const { user } = LocalStorageDB.load(USER_INFO);
-//   return user?.token ? user : null;
-// };
+const bootstrapUser = async () => {
+    const token = LocalStorageDB.load(ACCESS_TOKEN);
+    const user = LocalStorageDB.load(USER_INFO);
+    return token ? user : null;
+};
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
     const {data: user, error, isLoading, run, setData: setUser, updateData: updateUser} = useAsync<User | null>();
     const loginHandler = (form: AuthForm) => run(Login(form));
     const logoutHandler = () => Logout().then(() => setUser(null));
 
-    // useMount(bootstrapUser);
-    console.log("user", user);
+    useMount(
+        useCallback(() => {
+            run(bootstrapUser());
+        }, [])
+    );
     return (
         <AuthContext.Provider
             value={{

@@ -2,6 +2,7 @@ import {ResponseComposition, rest, RestRequest} from "msw";
 import UserDB from "./data/user";
 import {AuthForm} from "../types/authForm";
 import {User} from "../types/user";
+import {LoginResponseProps} from "../module/auth/usecase/login";
 
 const sleep = () =>
     new Promise(resolve => {
@@ -11,17 +12,17 @@ const sleep = () =>
 const handlers = [
     rest.post("/login", async (req: RestRequest<AuthForm>, res, ctx) => {
         const {username, password} = req.body;
-        let user: any;
+        let loginResponse: LoginResponseProps;
         try {
             await sleep();
-            user = await UserDB.authenticate({username, password});
+            loginResponse = (await UserDB.authenticate({username, password})) as LoginResponseProps;
         } catch (error: any) {
             if (error.message === "Username or Password is wrong") {
                 return res(ctx.status(400), ctx.json({message: error.message}));
             }
-            return res(ctx.status(500), ctx.json({message: "Server error!"}));
+            return res(ctx.status(500), ctx.json({message: error.stack}));
         }
-        return res(ctx.json({...user}));
+        return res(ctx.json(loginResponse));
     }),
     rest.put("/updateUser", async (req: RestRequest<{userInfo: User}>, res: ResponseComposition<any>, ctx) => {
         try {
