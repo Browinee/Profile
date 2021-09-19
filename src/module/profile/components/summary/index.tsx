@@ -13,7 +13,7 @@ interface SummaryProps {
 
 const SummaryList = styled.ul`
     padding: 2rem 1.6rem 0 2rem;
-    font-size: 13px;
+    font-size: 1.6rem;
     min-height: 300px;
 
     li {
