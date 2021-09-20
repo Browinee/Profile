@@ -21,6 +21,7 @@ const Modal: React.FC<ModalProps> = props => {
             width={width}
             bodyStyle={{overflowX: "auto", height: `${height}px`}}
             footer={footer}
+            maskClosable={false}
         >
             {children}
         </AntdModal>

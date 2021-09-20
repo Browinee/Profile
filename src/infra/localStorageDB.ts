@@ -5,17 +5,15 @@ export const ACCESS_TOKEN = "__access_token__";
 export const SERVER_USER_INFO = "__server_user_info__";
 
 export default class LocalStorageDB {
-    static save(key: string, value: string, expires = false) {
-        window.localStorage.setItem(key, value);
+    static save(key: string, value: any) {
+        const transformedValue = typeof value === "string" ? value : JSON.stringify(value);
+        window.localStorage.setItem(key, transformedValue);
     }
 
     static load(key: string): User | null {
-        try {
-            const data = window.localStorage.getItem(key) || "";
-            return key === ACCESS_TOKEN ? data : JSON.parse(data);
-        } catch (e) {
-            return null;
-        }
+        const data = window.localStorage.getItem(key);
+        if (data == null) return data;
+        return key === ACCESS_TOKEN ? data : JSON.parse(data);
     }
 
     static delete(key: string) {

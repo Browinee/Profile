@@ -16,7 +16,7 @@ let UserInfo: Omit<User, "token"> = {
     github: "https://github.com/Browinee/",
     summary: SUMMARY,
 };
-const persist = () => LocalStorageDB.save(SERVER_USER_INFO, JSON.stringify(UserInfo));
+const persist = () => LocalStorageDB.save(SERVER_USER_INFO, UserInfo);
 const load = () => Object.assign(UserInfo, LocalStorageDB.load(SERVER_USER_INFO));
 
 try {
@@ -34,6 +34,7 @@ function validateUserForm({username, password}: AuthForm) {
 export default class UserDB {
     static async authenticate({username, password}: AuthForm): Promise<{userInfo: User; token: string} | null> {
         validateUserForm({username, password});
+
         const userInfo = LocalStorageDB.load(SERVER_USER_INFO) as User;
         return {userInfo, token: btoa(userInfo.id)};
     }

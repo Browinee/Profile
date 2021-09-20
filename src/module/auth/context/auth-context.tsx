@@ -6,6 +6,8 @@ import Login from "../usecase/login";
 import Logout from "../usecase/logout";
 import LocalStorageDB, {ACCESS_TOKEN, USER_INFO} from "../../../infra/localStorageDB";
 import useMount from "../../../hooks/useMount";
+import UpdateUserInfo from "../usecase/updateUserInfo";
+import Loading from "../../../components/Loading";
 
 interface AuthContextProps {
     user: User | null;
@@ -14,27 +16,46 @@ interface AuthContextProps {
     errorMsg: string;
     isLoading: boolean;
     updateUser: (user: User) => void;
+    syncUser: () => void;
 }
 
 const AuthContext = React.createContext<AuthContextProps | undefined>(undefined);
 AuthContext.displayName = "AuthContext";
 
 const bootstrapUser = async () => {
-    const token = LocalStorageDB.load(ACCESS_TOKEN);
-    const user = LocalStorageDB.load(USER_INFO);
-    return token ? user : null;
+    try {
+        const token = LocalStorageDB.load(ACCESS_TOKEN);
+        const user = LocalStorageDB.load(USER_INFO);
+        /// send request
+        return token ? user : null;
+    } catch (e) {
+        return null;
+    }
 };
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
-    const {data: user, error, isLoading, run, setData: setUser, updateData: updateUser} = useAsync<User | null>();
+    const {data: user, error, isLoading, run, setData: setUser} = useAsync<User | null>();
     const loginHandler = (form: AuthForm) => run(Login(form));
     const logoutHandler = () => Logout().then(() => setUser(null));
-
+    const updateUser = (userInfo: User) => {
+        if (!navigator.onLine) {
+            LocalStorageDB.save(USER_INFO, userInfo);
+            setUser(userInfo);
+        } else {
+            return run(UpdateUserInfo(userInfo));
+        }
+    };
+    const syncUser = () => {
+        const userInfo = LocalStorageDB.load(USER_INFO);
+        if (userInfo === null) return;
+        return run(UpdateUserInfo(userInfo));
+    };
     useMount(
         useCallback(() => {
             run(bootstrapUser());
         }, [])
     );
+
     return (
         <AuthContext.Provider
             value={{
@@ -44,9 +65,11 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
                 errorMsg: error?.message || "",
                 isLoading,
                 updateUser,
+                syncUser,
             }}
         >
             {children}
+            {isLoading && <Loading />}
         </AuthContext.Provider>
     );
 };

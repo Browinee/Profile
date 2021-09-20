@@ -7,7 +7,7 @@ export interface LoginResponseProps {
     userInfo: User;
     token: string;
 }
-const LoginService = (userInfo: AuthForm): Promise<User> => {
+const Login = (userInfo: AuthForm): Promise<User> => {
     return http.post("/login", userInfo).then(loginResponse => {
         const {userInfo, token} = loginResponse as unknown as LoginResponseProps;
         LocalStorageDB.save(USER_INFO, JSON.stringify(userInfo as unknown as User));
@@ -15,4 +15,4 @@ const LoginService = (userInfo: AuthForm): Promise<User> => {
         return userInfo;
     });
 };
-export default LoginService;
+export default Login;

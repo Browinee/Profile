@@ -24,9 +24,10 @@ const handlers = [
         }
         return res(ctx.json(loginResponse));
     }),
-    rest.put("/updateUser", async (req: RestRequest<{userInfo: User}>, res: ResponseComposition<any>, ctx) => {
+    rest.put("/updateUser", async (req: RestRequest<User>, res: ResponseComposition<any>, ctx) => {
         try {
-            const {userInfo} = req.body;
+            await sleep();
+            const userInfo = req.body;
             const newUserInfo = await UserDB.save(userInfo);
             return res(ctx.status(200), ctx.json(newUserInfo));
         } catch (e) {

@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import React, {Suspense, useCallback, useEffect, useMemo, useState} from "react";
 import "./App.css";
 import GlobalStyle from "./theme/globalStyles";
 import ResetStyle from "./theme/resestStyles";
@@ -9,7 +9,8 @@ import Loading from "./components/Loading";
 import {useAuth} from "./module/auth/context/auth-context";
 import UnAuthenticatedApp from "./module/auth/components/UnAuthenticated";
 import Authenticated from "./module/auth/components/Authenticated";
-import {resetFirstInputPolyfill} from "web-vitals/dist/modules/lib/polyfills/firstInputPolyfill";
+import Modal from "./components/Modal";
+import {Button} from "antd";
 
 const Container = styled.div`
     width: 100vw;
@@ -19,8 +20,40 @@ const Container = styled.div`
     justify-content: center;
 `;
 
+const NetworkMsg = styled.div`
+    text-align: center;
+`;
+
 function App() {
-    const {user} = useAuth();
+    const {user, syncUser} = useAuth();
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const [isModal, setIsModal] = useState(false);
+
+    const setOnline = useCallback(() => {
+        setIsOnline(true);
+        setIsModal(true);
+    }, []);
+    const setOffline = useCallback(() => {
+        setIsModal(true);
+        setIsOnline(false);
+    }, []);
+    const toggleModal = useCallback(() => {
+        setIsModal(prev => !prev);
+        isOnline && syncUser();
+    }, [setIsModal, isOnline, syncUser]);
+    useEffect(() => {
+        window.addEventListener("offline", setOffline);
+        window.addEventListener("online", setOnline);
+
+        return () => {
+            window.removeEventListener("offline", setOffline);
+            window.removeEventListener("online", setOnline);
+        };
+    }, []);
+    const ModalFooter = useMemo(() => {
+        return <Button onClick={toggleModal}>OK</Button>;
+    }, [isOnline]);
+
     return (
         <ErrorBoundary fallbackRender={FullPageErrorFallback}>
             <Suspense fallback={<Loading />}>
@@ -28,6 +61,20 @@ function App() {
                     <ResetStyle />
                     <GlobalStyle />
                     {user ? <Authenticated /> : <UnAuthenticatedApp />}
+                    {isModal && (
+                        <Modal
+                            height={100}
+                            title={isOnline ? "Online" : "Offline"}
+                            cancelHandler={toggleModal}
+                            footer={ModalFooter}
+                        >
+                            <NetworkMsg>
+                                {isOnline
+                                    ? "Network recover. Begin to sync data."
+                                    : "Offline now. User could still modify data, and data would be synced once network recovers."}
+                            </NetworkMsg>
+                        </Modal>
+                    )}
                 </Container>
             </Suspense>
         </ErrorBoundary>
