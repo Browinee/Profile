@@ -3,6 +3,7 @@ import UserDB from "./data/user";
 import {AuthForm} from "../types/authForm";
 import {User} from "../types/user";
 import {LoginResponseProps} from "../module/auth/usecase/login";
+import VanityUrlDB from "./data/vanityUrl";
 
 const sleep = () =>
     new Promise(resolve => {
@@ -53,6 +54,13 @@ const handlers = [
     }),
     rest.post("/vanityUrl", async (req: RestRequest<any>, res, ctx) => {
         await sleep();
+    }),
+    rest.get("/vanityUrl", async (req: RestRequest<any>, res, ctx) => {
+        await sleep();
+        const id = req.url.searchParams.get("id");
+        const vanityInfo = await VanityUrlDB.getVanityUrlInfo(id);
+        if (!vanityInfo) return res(ctx.status(404));
+        return res(ctx.json(vanityInfo));
     }),
 ];
 

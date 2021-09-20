@@ -3,7 +3,8 @@ import useAsync from "../../../hooks/useAsync";
 import useMount from "../../../hooks/useMount";
 import {VanityUrlProps} from "../../../server/data/vanityUrl";
 import GetVanityUrlInfo from "../usecase/getVanityUrl";
-import {useParams} from "react-router";
+import {useHistory, useParams} from "react-router";
+import UserNotFound from "../components/UserNotFound";
 
 interface SharedContextProps {
     vanityUrlInfo: VanityUrlProps | null;
@@ -18,14 +19,13 @@ const bootstrap = async (id: string) => {
 };
 
 export const SharedProvider = ({children}: {children: ReactNode}) => {
-    const {data: vanityUrlInfo, run} = useAsync<VanityUrlProps | null>();
+    const {data: vanityUrlInfo, run, error} = useAsync<VanityUrlProps | null>();
     const {id} = useParams<{id: string}>();
     useMount(
         useCallback(() => {
             run(bootstrap(id));
         }, [])
     );
-
     return (
         <SharedContext.Provider
             value={{
@@ -33,7 +33,7 @@ export const SharedProvider = ({children}: {children: ReactNode}) => {
                 isShared: true,
             }}
         >
-            {children}
+            {error && (error as any).status === 404 ? <UserNotFound /> : children}
         </SharedContext.Provider>
     );
 };

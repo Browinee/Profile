@@ -1,7 +1,6 @@
 import http from "../../../infra/http";
 import {VanityUrlProps} from "../../../server/data/vanityUrl";
 import {PERMISSION} from "../../auth/permissionList";
-import {User} from "../../../types/user";
 
 interface GetVanityUrlInfoProps {
     params: {
@@ -10,10 +9,9 @@ interface GetVanityUrlInfoProps {
 }
 
 const GetVanityUrlInfo = (urlParams: GetVanityUrlInfoProps): Promise<any> => {
-    return Promise.resolve().then(() => ({url: "test", permission: PERMISSION.slice(3)}));
-    // return http.get("/vanityUrl", urlParams).then((res: VanityUrlProps[]) => {
-    //
-    //
-    // });
+    console.log("GetVanityUrlInfo", urlParams);
+    return http.get(`/vanityUrl`, urlParams).then((res: any) => {
+        return res;
+    });
 };
 export default GetVanityUrlInfo;

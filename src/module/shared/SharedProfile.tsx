@@ -9,6 +9,7 @@ import Summary from "../profile/components/Summary";
 import Experience from "../profile/components/Experience";
 import {useAuth} from "../auth/context/auth-context";
 import styled from "styled-components";
+import {useParams} from "react-router";
 
 const Container = styled.main`
     width: 100vw;
