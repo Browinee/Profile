@@ -3,9 +3,11 @@ import {down} from "styled-breakpoints";
 
 export const Container = styled.main`
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 6rem);
     background: white;
     display: flex;
+    margin-top: 6rem;
+    position: relative;
 `;
 export const Basic = styled.aside<{showBasic?: boolean}>`
     width: 30%;

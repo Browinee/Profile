@@ -28,11 +28,12 @@ import ExperienceForm from "./components/Template/Experience";
 import {ArrowRightSVGICON} from "../../components/Aarrow";
 import {breakpoints} from "../../theme/theme";
 import Modal from "../../components/Modal";
+import Header from "./components/Header";
 
 const QUERY = `(max-width: ${breakpoints.md})`;
 
 function Profile() {
-    const {user, updateUser, errorMsg, resetError} = useAuth();
+    const {user, updateUser, errorMsg, resetError, logout} = useAuth();
     const updateImageHandler = useCallback(
         (imageUrl: string) => {
             const newUserData = {
@@ -70,7 +71,6 @@ function Profile() {
         updateUser(newUser);
     };
     const onConfirmWorkHandler = (workId: string, workExperience: Work) => {
-        console.log("workId", {workId, workExperience});
         if (user) {
             const isUpdated: boolean = !!user.workExperience.find((work: Work) => work.id === workId);
             const newWorkExperience = isUpdated
@@ -118,52 +118,55 @@ function Profile() {
         );
     }, [resetError]);
     return (
-        <Container>
-            <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
-                <AvatarContainer className="avatar-container">
-                    <FeatureToggle permissions={[PERMISSION_MAP.AVATAR_VIEW]}>
-                        <Avatar imageUrl={user?.avatar || ""} />
-                    </FeatureToggle>
-                    <FeatureToggle permissions={[PERMISSION_MAP.AVATAR_EDIT]}>
-                        <Upload name="file" onChange={uploadAvatarHandler} showUploadList={false} action="">
-                            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                        </Upload>
-                    </FeatureToggle>
-                </AvatarContainer>
-                <Bar />
-                <BasicInfo>
-                    <InfoBlock user={user} editHandler={modalHandler} />
-                </BasicInfo>
-            </Basic>
-            <WorkExperience>
-                <Summary summary={user?.summary || []} editHandler={modalHandler} />
-                <Divider />
-                <Experience workExperience={user?.workExperience || []} editHandler={modalHandler} />
-            </WorkExperience>
-            {modalType === RESUME_MAPS.basic && (
-                <BasicForm basicInfo={adapterBasic(user)} cancelHandler={onClose} confirmHandler={onConfirmHandler} />
-            )}
-            {modalType === RESUME_MAPS.summary && (
-                <SummaryForm summary={adapterSummary(user)} cancelHandler={onClose} confirmHandler={onConfirmHandler} />
-            )}
-            {modalType === RESUME_MAPS.experience && (
-                <ExperienceForm
-                    isNew={isNew}
-                    workExperience={selectedWork}
-                    cancelHandler={onClose}
-                    confirmHandler={onConfirmWorkHandler}
-                    deleteHandler={onDeleteHandler}
-                />
-            )}
-            <StyledSidebarButton onClick={showBasicHandler} showBasic={showBasic}>
-                <ArrowRightSVGICON />
-            </StyledSidebarButton>
-            {errorMsg && (
-                <Modal height={100} title={"Error"} cancelHandler={resetError} footer={errorModalButton}>
-                    {errorMsg}
-                </Modal>
-            )}
-        </Container>
+        <>
+            <Header logout={logout} />
+            <Container>
+                <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
+                    <AvatarContainer className="avatar-container">
+                        <FeatureToggle permissions={[PERMISSION_MAP.AVATAR_VIEW]}>
+                            <Avatar imageUrl={user?.avatar || ""} />
+                        </FeatureToggle>
+                        <FeatureToggle permissions={[PERMISSION_MAP.AVATAR_EDIT]}>
+                            <Upload name="file" onChange={uploadAvatarHandler} showUploadList={false} action="">
+                                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                            </Upload>
+                        </FeatureToggle>
+                    </AvatarContainer>
+                    <Bar />
+                    <BasicInfo>
+                        <InfoBlock user={user} editHandler={modalHandler} />
+                    </BasicInfo>
+                </Basic>
+                <WorkExperience>
+                    <Summary summary={user?.summary || []} editHandler={modalHandler} />
+                    <Divider />
+                    <Experience workExperience={user?.workExperience || []} editHandler={modalHandler} />
+                </WorkExperience>
+                {modalType === RESUME_MAPS.basic && (
+                    <BasicForm basicInfo={adapterBasic(user)} cancelHandler={onClose} confirmHandler={onConfirmHandler} />
+                )}
+                {modalType === RESUME_MAPS.summary && (
+                    <SummaryForm summary={adapterSummary(user)} cancelHandler={onClose} confirmHandler={onConfirmHandler} />
+                )}
+                {modalType === RESUME_MAPS.experience && (
+                    <ExperienceForm
+                        isNew={isNew}
+                        workExperience={selectedWork}
+                        cancelHandler={onClose}
+                        confirmHandler={onConfirmWorkHandler}
+                        deleteHandler={onDeleteHandler}
+                    />
+                )}
+                <StyledSidebarButton onClick={showBasicHandler} showBasic={showBasic}>
+                    <ArrowRightSVGICON />
+                </StyledSidebarButton>
+                {errorMsg && (
+                    <Modal height={100} title={"Error"} cancelHandler={resetError} footer={errorModalButton}>
+                        {errorMsg}
+                    </Modal>
+                )}
+            </Container>
+        </>
     );
 }
 
