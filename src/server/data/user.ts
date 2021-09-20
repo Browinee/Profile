@@ -17,13 +17,10 @@ let UserInfo: Omit<User, "token"> = {
     summary: SUMMARY,
 };
 const persist = () => LocalStorageDB.save(SERVER_USER_INFO, UserInfo);
-const load = () => Object.assign(UserInfo, LocalStorageDB.load(SERVER_USER_INFO));
 
 try {
-    load();
-} catch (error) {
     persist();
-}
+} catch (error) {}
 
 function validateUserForm({username, password}: AuthForm) {
     if (username !== "admin" || password !== "admin") {

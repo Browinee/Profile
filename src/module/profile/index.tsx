@@ -11,7 +11,7 @@ import {useAuth} from "../auth/context/auth-context";
 import Avatar from "../../components/Avatar";
 import InfoBlock from "./components/InfoBlock";
 import Summary from "./components/Summary";
-import {Button, Divider, Upload} from "antd";
+import {Button, Divider, Upload, message} from "antd";
 import Experience from "./components/Experience";
 import {User, Work} from "../../types/user";
 import {FeatureToggle} from "../auth/auth";
@@ -31,7 +31,7 @@ import {breakpoints} from "../../theme/theme";
 const QUERY = `(max-width: ${breakpoints.md})`;
 
 function Profile() {
-    const {user, updateUser} = useAuth();
+    const {user, updateUser, errorMsg} = useAuth();
     const updateImageHandler = useCallback(
         (imageUrl: string) => {
             const newUserData = {
@@ -108,7 +108,7 @@ function Profile() {
             window.removeEventListener("resize", matchMediaHandler);
         };
     }, []);
-    console.log("show", showBasic);
+
     return (
         <Container>
             <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
@@ -150,6 +150,9 @@ function Profile() {
             <StyledSidebarButton onClick={showBasicHandler} showBasic={showBasic}>
                 <ArrowRightSVGICON />
             </StyledSidebarButton>
+            {
+                // errorMsg.length > 0 &&  message.error(errorMsg, 5)
+            }
         </Container>
     );
 }

@@ -10,7 +10,7 @@ import {useAuth} from "./module/auth/context/auth-context";
 import UnAuthenticatedApp from "./module/auth/components/UnAuthenticated";
 import Authenticated from "./module/auth/components/Authenticated";
 import Modal from "./components/Modal";
-import {Button} from "antd";
+import {Button, message} from "antd";
 
 const Container = styled.div`
     width: 100vw;
@@ -39,8 +39,12 @@ function App() {
     }, []);
     const toggleModal = useCallback(() => {
         setIsModal(prev => !prev);
-        isOnline && syncUser();
+        isOnline &&
+            Promise.resolve(syncUser()).then(() => {
+                return message.success("Finish sync.");
+            });
     }, [setIsModal, isOnline, syncUser]);
+
     useEffect(() => {
         window.addEventListener("offline", setOffline);
         window.addEventListener("online", setOnline);
@@ -53,7 +57,6 @@ function App() {
     const ModalFooter = useMemo(() => {
         return <Button onClick={toggleModal}>OK</Button>;
     }, [isOnline]);
-
     return (
         <ErrorBoundary fallbackRender={FullPageErrorFallback}>
             <Suspense fallback={<Loading />}>

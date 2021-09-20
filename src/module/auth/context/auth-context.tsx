@@ -1,4 +1,4 @@
-import React, {ReactNode, useCallback, useContext} from "react";
+import React, {ReactNode, useCallback, useContext, useMemo} from "react";
 import {User} from "../../../types/user";
 import {AuthForm} from "../../../types/authForm";
 import useAsync from "../../../hooks/useAsync";
@@ -8,6 +8,8 @@ import LocalStorageDB, {ACCESS_TOKEN, USER_INFO} from "../../../infra/localStora
 import useMount from "../../../hooks/useMount";
 import UpdateUserInfo from "../usecase/updateUserInfo";
 import Loading from "../../../components/Loading";
+import Modal from "../../../components/Modal";
+import {Button} from "antd";
 
 interface AuthContextProps {
     user: User | null;
@@ -34,7 +36,7 @@ const bootstrapUser = async () => {
 };
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
-    const {data: user, error, isLoading, run, setData: setUser} = useAsync<User | null>();
+    const {data: user, error, isLoading, run, setData: setUser, isError} = useAsync<User | null>();
     const loginHandler = (form: AuthForm) => run(Login(form));
     const logoutHandler = () => Logout().then(() => setUser(null));
     const updateUser = (userInfo: User) => {
