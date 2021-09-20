@@ -40,7 +40,13 @@ const useAsync = <T,>(initialState?: State<T>, initialConfig?: typeof defaultCon
             error,
             status: "error",
         }));
-
+    const resetError = () => {
+        setState(prev => ({
+            ...prev,
+            error: null,
+            status: "idle",
+        }));
+    };
     const run = (promise: Promise<T>) => {
         if (!promise || !promise.then) {
             throw new Error("Please enter a Promise");
@@ -62,6 +68,7 @@ const useAsync = <T,>(initialState?: State<T>, initialConfig?: typeof defaultCon
         setData,
         setError,
         updateData,
+        resetError,
         run,
         ...state,
     };

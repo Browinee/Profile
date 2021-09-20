@@ -53,10 +53,10 @@ function App() {
             window.removeEventListener("offline", setOffline);
             window.removeEventListener("online", setOnline);
         };
-    }, []);
+    }, [setOffline, setOnline]);
     const ModalFooter = useMemo(() => {
         return <Button onClick={toggleModal}>OK</Button>;
-    }, [isOnline]);
+    }, [toggleModal]);
     return (
         <ErrorBoundary fallbackRender={FullPageErrorFallback}>
             <Suspense fallback={<Loading />}>

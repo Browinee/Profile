@@ -29,7 +29,6 @@ const handlers = [
             await sleep();
             const userInfo = req.body;
             const newUserInfo = await UserDB.save(userInfo);
-            // return res(ctx.status(500), ctx.json({message: "test"}));
             return res(ctx.status(200), ctx.json(newUserInfo));
         } catch (e: any) {
             // return res(ctx.status(400), ctx.json({message: "Please check param"}));

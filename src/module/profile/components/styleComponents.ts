@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import {down} from "styled-breakpoints";
-import {breakpoints} from "../../../theme/theme";
 
 export const Container = styled.main`
     width: 100vw;

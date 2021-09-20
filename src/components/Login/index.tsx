@@ -13,7 +13,7 @@ interface LoginProps {
 }
 
 export const Login = (props: LoginProps) => {
-    const {login, isLoading} = props;
+    const {login} = props;
     const [initialValue] = useState({
         username: "admin",
         password: "admin",

@@ -43,7 +43,7 @@ const ExperienceForm = (props: ExperienceFormProps) => {
     const [formRef] = Form.useForm();
     const onCancelHandler = useCallback(() => {
         cancelHandler();
-    }, []);
+    }, [cancelHandler]);
     const onConfirmHandler = useCallback(async () => {
         try {
             await formRef.validateFields();
@@ -59,7 +59,7 @@ const ExperienceForm = (props: ExperienceFormProps) => {
         } catch (e) {
             console.error("Form error", e);
         }
-    }, [confirmHandler, workAdapter, localWorkExperience]);
+    }, [confirmHandler, localWorkExperience, cancelHandler]);
 
     const checkHandler = useCallback(
         (e: CheckboxChangeEvent) => {
@@ -85,7 +85,7 @@ const ExperienceForm = (props: ExperienceFormProps) => {
         deleteHandler(workExperience.id);
         toggleConfirmDeleteHandler();
         onCancelHandler();
-    }, [workExperience.id, toggleConfirmDeleteHandler, onCancelHandler]);
+    }, [workExperience.id, toggleConfirmDeleteHandler, onCancelHandler, deleteHandler]);
 
     const ModalFooter = useMemo(() => {
         return [
@@ -101,7 +101,7 @@ const ExperienceForm = (props: ExperienceFormProps) => {
                 Confirm
             </Button>,
         ];
-    }, [onCancelHandler, onConfirmHandler]);
+    }, [onCancelHandler, onConfirmHandler, isNew, toggleConfirmDeleteHandler]);
 
     const onUploadHandler = useCallback(
         (info: UploadChangeParam) => {
@@ -114,7 +114,7 @@ const ExperienceForm = (props: ExperienceFormProps) => {
                 });
             });
         },
-        [setLocalWorkExperience, getBase64]
+        [setLocalWorkExperience]
     );
 
     return (

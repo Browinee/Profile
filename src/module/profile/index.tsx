@@ -11,13 +11,13 @@ import {useAuth} from "../auth/context/auth-context";
 import Avatar from "../../components/Avatar";
 import InfoBlock from "./components/InfoBlock";
 import Summary from "./components/Summary";
-import {Button, Divider, Upload, message} from "antd";
+import {Button, Divider, Upload} from "antd";
 import Experience from "./components/Experience";
 import {User, Work} from "../../types/user";
 import {FeatureToggle} from "../auth/auth";
 import {PERMISSION_MAP} from "../auth/permissionList";
 import {UploadOutlined} from "@ant-design/icons";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {UploadChangeParam} from "antd/lib/upload/interface";
 import {getBase64} from "../../utils/base64";
 import {DefaultCompanyInfo, RESUME_MAPS} from "./constants";
@@ -27,11 +27,12 @@ import {adapterBasic, adapterSummary} from "./adapter";
 import ExperienceForm from "./components/Template/Experience";
 import {ArrowRightSVGICON} from "../../components/Aarrow";
 import {breakpoints} from "../../theme/theme";
+import Modal from "../../components/Modal";
 
 const QUERY = `(max-width: ${breakpoints.md})`;
 
 function Profile() {
-    const {user, updateUser, errorMsg} = useAuth();
+    const {user, updateUser, errorMsg, resetError} = useAuth();
     const updateImageHandler = useCallback(
         (imageUrl: string) => {
             const newUserData = {
@@ -101,14 +102,21 @@ function Profile() {
     const matchMediaHandler = useCallback(() => {
         const isMatched = window.matchMedia(QUERY).matches;
         setShowBasic(!isMatched);
-    }, [setShowBasic, showBasic]);
+    }, [setShowBasic]);
     useEffect(() => {
         window.addEventListener("resize", matchMediaHandler);
         return () => {
             window.removeEventListener("resize", matchMediaHandler);
         };
-    }, []);
+    }, [matchMediaHandler]);
 
+    const errorModalButton = useMemo(() => {
+        return (
+            <Button type="primary" onClick={resetError}>
+                Got it
+            </Button>
+        );
+    }, [resetError]);
     return (
         <Container>
             <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
@@ -150,9 +158,11 @@ function Profile() {
             <StyledSidebarButton onClick={showBasicHandler} showBasic={showBasic}>
                 <ArrowRightSVGICON />
             </StyledSidebarButton>
-            {
-                // errorMsg.length > 0 &&  message.error(errorMsg, 5)
-            }
+            {errorMsg && (
+                <Modal height={100} title={"Error"} cancelHandler={resetError} footer={errorModalButton}>
+                    {errorMsg}
+                </Modal>
+            )}
         </Container>
     );
 }

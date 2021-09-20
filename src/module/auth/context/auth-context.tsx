@@ -18,6 +18,7 @@ interface AuthContextProps {
     isLoading: boolean;
     updateUser: (user: User) => void;
     syncUser: () => void;
+    resetError: () => void;
 }
 
 const AuthContext = React.createContext<AuthContextProps | undefined>(undefined);
@@ -32,7 +33,7 @@ const bootstrapUser = async () => {
 };
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
-    const {data: user, error, isLoading, run, setData: setUser, isError} = useAsync<User | null>();
+    const {data: user, error, isLoading, run, setData: setUser, resetError} = useAsync<User | null>();
     const loginHandler = (form: AuthForm) => run(Login(form));
     const logoutHandler = () => Logout().then(() => setUser(null));
     const updateUser = (userInfo: User) => {
@@ -64,6 +65,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
                 isLoading,
                 updateUser,
                 syncUser,
+                resetError,
             }}
         >
             {children}
