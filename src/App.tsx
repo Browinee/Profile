@@ -11,6 +11,7 @@ import UnAuthenticatedApp from "./module/auth/components/UnAuthenticated";
 import Authenticated from "./module/auth/components/Authenticated";
 import Modal from "./components/Modal";
 import {Button, message} from "antd";
+import Shared from "./module/shared";
 
 const Container = styled.div`
     width: 100vw;
@@ -25,6 +26,9 @@ const NetworkMsg = styled.div`
 `;
 
 function App() {
+    const [isShared] = useState(() => {
+        return document.location.href.includes("shared");
+    });
     const {user, syncUser} = useAuth();
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const [isModal, setIsModal] = useState(false);
@@ -63,7 +67,7 @@ function App() {
                 <Container className="App">
                     <ResetStyle />
                     <GlobalStyle />
-                    {user ? <Authenticated /> : <UnAuthenticatedApp />}
+                    {!isShared ? user ? <Authenticated /> : <UnAuthenticatedApp /> : <Shared />}
                     {isModal && (
                         <Modal
                             height={100}

@@ -1,6 +1,6 @@
 import {Work} from "../../../../types/user";
 import styled from "styled-components";
-import {FeatureToggle} from "../../../auth/auth";
+import FeatureToggle from "../../../auth/auth";
 import {PERMISSION_MAP} from "../../../auth/permissionList";
 import ExperienceBLock from "./experienceBLock";
 import AddIcon from "../../../../components/AddIcon";
@@ -9,7 +9,7 @@ import {RESUME_MAPS} from "../../constants";
 
 interface ExperienceProps {
     workExperience: Work[];
-    editHandler: (type: string, workId?: string) => void;
+    editHandler?: (type: string, workId?: string) => void;
 }
 
 const Header = styled.header`
@@ -33,7 +33,7 @@ const AddContainer = styled.div`
     cursor: pointer;
 `;
 const Experience = (props: ExperienceProps) => {
-    const {workExperience, editHandler} = props;
+    const {workExperience, editHandler = () => {}} = props;
     const addHandler = useCallback(() => {
         editHandler(RESUME_MAPS.experience);
     }, [editHandler]);

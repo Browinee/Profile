@@ -5,7 +5,7 @@ import {SUMMARY, WORKEXPERIENCE} from "../../constants";
 import avatar from "../../assets/avatar.png";
 import LocalStorageDB, {SERVER_USER_INFO} from "../../infra/localStorageDB";
 
-let UserInfo: Omit<User, "token"> = {
+export const UserInfo: Omit<User, "token"> = {
     id: "1",
     name: "Justin",
     email: "Nihilitypeo@gmail.com",

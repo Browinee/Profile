@@ -1,7 +1,7 @@
 import {User} from "../../../../types/user";
 import styled from "styled-components";
 import EditIcon from "../../../../components/EditIcon";
-import {FeatureToggle} from "../../../auth/auth";
+import FeatureToggle from "../../../auth/auth";
 import {PERMISSION_MAP} from "../../../auth/permissionList";
 import {useCallback} from "react";
 import {RESUME_MAPS} from "../../constants";
@@ -9,7 +9,7 @@ import {down} from "styled-breakpoints";
 
 interface BaseInfoProps {
     user: User | null;
-    editHandler: (type: string, workId?: string) => void;
+    editHandler?: (type: string, workId?: string) => void;
 }
 
 const Container = styled.div`
@@ -49,7 +49,7 @@ const Content = styled.ul`
 `;
 
 function InfoBlock(props: BaseInfoProps) {
-    const {user, editHandler} = props;
+    const {user, editHandler = () => {}} = props;
     const clickHandler = useCallback(() => {
         editHandler(RESUME_MAPS.basic);
     }, [editHandler]);

@@ -1,6 +1,6 @@
 import {Divider} from "antd";
 import styled from "styled-components";
-import {FeatureToggle} from "../../../auth/auth";
+import FeatureToggle from "../../../auth/auth";
 import {PERMISSION_MAP} from "../../../auth/permissionList";
 import EditIcon from "../../../../components/EditIcon";
 import {useCallback} from "react";
@@ -8,7 +8,7 @@ import {RESUME_MAPS} from "../../constants";
 
 interface SummaryProps {
     summary: string[];
-    editHandler: (type: string, workkId?: string) => void;
+    editHandler?: (type: string, workkId?: string) => void;
 }
 
 const SummaryList = styled.ul`
@@ -25,7 +25,7 @@ const Header = styled.h1`
     font-size: 3rem;
 `;
 const Summary = (props: SummaryProps) => {
-    const {summary, editHandler} = props;
+    const {summary, editHandler = () => {}} = props;
     const clickHandler = useCallback(() => {
         editHandler(RESUME_MAPS.summary);
     }, [editHandler]);

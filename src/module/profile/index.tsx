@@ -14,7 +14,7 @@ import Summary from "./components/Summary";
 import {Button, Divider, Upload} from "antd";
 import Experience from "./components/Experience";
 import {User, Work} from "../../types/user";
-import {FeatureToggle} from "../auth/auth";
+import FeatureToggle from "../auth/auth";
 import {PERMISSION_MAP} from "../auth/permissionList";
 import {UploadOutlined} from "@ant-design/icons";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
@@ -28,12 +28,11 @@ import ExperienceForm from "./components/Template/Experience";
 import {ArrowRightSVGICON} from "../../components/Aarrow";
 import {breakpoints} from "../../theme/theme";
 import Modal from "../../components/Modal";
-import Header from "./components/Header";
 
 const QUERY = `(max-width: ${breakpoints.md})`;
 
 function Profile() {
-    const {user, updateUser, errorMsg, resetError, logout} = useAuth();
+    const {user, updateUser, errorMsg, resetError} = useAuth();
     const updateImageHandler = useCallback(
         (imageUrl: string) => {
             const newUserData = {
@@ -119,7 +118,6 @@ function Profile() {
     }, [resetError]);
     return (
         <>
-            <Header logout={logout} />
             <Container>
                 <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
                     <AvatarContainer className="avatar-container">

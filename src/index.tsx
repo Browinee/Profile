@@ -3,21 +3,24 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "antd/dist/antd.css";
 import App from "./App";
-import { AuthProvider } from "./module/auth/context/auth-context";
+import {AuthProvider} from "./module/auth/context/auth-context";
 import reportWebVitals from "./reportWebVitals";
-import { ThemeProvider } from "styled-components";
+import {ThemeProvider} from "styled-components";
 import THEME from "./theme/theme";
 import "./server";
+import {HashRouter} from "react-router-dom";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={THEME}>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </ThemeProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+    <React.StrictMode>
+        <ThemeProvider theme={THEME}>
+            <HashRouter>
+                <AuthProvider>
+                    <App />
+                </AuthProvider>
+            </HashRouter>
+        </ThemeProvider>
+    </React.StrictMode>,
+    document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

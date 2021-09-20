@@ -2,7 +2,7 @@ import {Work} from "../../../../types/user";
 import {Card} from "antd";
 import styled from "styled-components";
 import Avatar from "../../../../components/Avatar";
-import {FeatureToggle} from "../../../auth/auth";
+import FeatureToggle from "../../../auth/auth";
 import {PERMISSION_MAP} from "../../../auth/permissionList";
 import EditIcon from "../../../../components/EditIcon";
 import {useCallback} from "react";

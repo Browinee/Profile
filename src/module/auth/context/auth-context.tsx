@@ -29,6 +29,10 @@ const bootstrapUser = async () => {
     if (token) {
         return http.get("/me") as Promise<User>;
     }
+    const isShared = document.location.href.includes("/shared");
+    if (isShared) {
+        return http.get("/open-me") as Promise<User>;
+    }
     return null;
 };
 

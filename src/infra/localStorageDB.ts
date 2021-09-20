@@ -3,6 +3,7 @@ import {User} from "../types/user";
 export const USER_INFO = "__user_info__";
 export const ACCESS_TOKEN = "__access_token__";
 export const SERVER_USER_INFO = "__server_user_info__";
+export const SERVER_VANITY_INFO = "__server_vanity_info__";
 
 export default class LocalStorageDB {
     static save(key: string, value: any) {

@@ -46,6 +46,14 @@ const handlers = [
         const userInfo = await UserDB.getUserInfo();
         return res(ctx.json(userInfo));
     }),
+    rest.get("/open-me", async (req: RestRequest<User>, res, ctx) => {
+        await sleep();
+        const userInfo = await UserDB.getUserInfo();
+        return res(ctx.json(userInfo));
+    }),
+    rest.post("/vanityUrl", async (req: RestRequest<any>, res, ctx) => {
+        await sleep();
+    }),
 ];
 
 export {handlers};
