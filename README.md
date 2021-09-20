@@ -1,48 +1,35 @@
 # Profile
 
+This is a application about my resume. User should enter username and password to login.
+After logging in as admin, user can view and modify each part including avatar, basic info
+summary, experience. Also, user could create a share link which is easy to memorize and share.
+
+## Demo
+
+https://profile-six-rho.vercel.app/#/profile
+
 ## Feature
 
 - Login
-  - admin/amin with all the authorities
+  - dmin/admin with all the authorities
 - Profile
-  - admin user has most power so cant view and edit everything
-  - create vanity url with authroities control
-- vanity url
-  - after user enter vanity url in url, should redirect to share/xxx/xxx, if not 404
-- others
-  - feature toggle
-
-## Project structure
+  - Admin user has all permissions and can view and edit each part.
+  - Avatar: user could upload avatar.
+  - Summary: user could add or remove summary.
+  - Experience: user can update or remove or add new experience.
+- Vanity url
+  - User could create new shared url and give authority on each part.
+  - After creating url, user could enter the url on new tab and see the result.
+- authorization/authentication
+  - Login page
+  - Feature toggle to control each part
 
 ##Setup
 
 ```shell
 
- cp .env.example cp .env.development
 
  yarn
 
  yarn start
 ```
-
-## Testing
-
-- Use msw(mock service worker) to mock response.
-
-```shell
-yarn run test
-```
-
-## Storybook
-
-```shell
-yarn run storybook
-```
-
-Others:
-
-1. check upload image
-2. React.memo different parts
-   3.put token in header
-3. error handleing
-4. vanityurl with same url. use new
