@@ -1,5 +1,5 @@
 import {useAuth} from "./context/auth-context";
-import {useShared} from "../shared/context/shared-context";
+import {useShared} from "../sharedProfile/context/shared-context";
 
 interface FeatureToggleProps {
     children: any;

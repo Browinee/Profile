@@ -19,7 +19,7 @@ const Container = styled.main`
     position: relative;
 `;
 
-function SharedProfile() {
+function Profile() {
     const showBasic = true;
     const {user} = useAuth();
     return (
@@ -46,4 +46,4 @@ function SharedProfile() {
     );
 }
 
-export default SharedProfile;
+export default Profile;

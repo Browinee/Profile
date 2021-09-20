@@ -1,15 +1,15 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
-import SharedProfile from "./SharedProfile";
+import Profile from "./Profile";
 
-function Shared() {
+function SharedProfile() {
     return (
         <Switch>
             <Route exact path={"/shared/:id"}>
-                <SharedProfile />
+                <Profile />
             </Route>
         </Switch>
     );
 }
 
-export default Shared;
+export default SharedProfile;

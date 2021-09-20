@@ -11,7 +11,7 @@ import UnAuthenticatedApp from "./module/auth/components/UnAuthenticated";
 import Authenticated from "./module/auth/components/Authenticated";
 import Modal from "./components/Modal";
 import {Button, message} from "antd";
-import Shared from "./module/shared";
+import Shared from "./module/sharedProfile";
 
 const Container = styled.div`
     width: 100vw;
