@@ -9,7 +9,7 @@ import Experience from "../profile/components/Experience";
 import {useAuth} from "../auth/context/auth-context";
 import styled from "styled-components";
 import {SharedProvider} from "./context/shared-context";
-// import Summary from "../profile/components/Summary";
+import Summary from "../profile/components/Summary";
 
 const Container = styled.main`
     width: 100vw;
@@ -37,7 +37,7 @@ function Profile() {
                     </BasicInfo>
                 </Basic>
                 <WorkExperience>
-                    {/*<Summary summary={user?.summary || []} />*/}
+                    <Summary summary={user?.summary || []} />
                     <Divider />
                     <Experience workExperience={user?.workExperience || []} />
                 </WorkExperience>

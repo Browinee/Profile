@@ -59,7 +59,7 @@ const ExperienceForm = (props: ExperienceFormProps) => {
         } catch (e) {
             console.error("Form error", e);
         }
-    }, [confirmHandler, localWorkExperience, cancelHandler]);
+    }, [confirmHandler, localWorkExperience, cancelHandler, formRef]);
 
     const checkHandler = useCallback(
         (e: CheckboxChangeEvent) => {

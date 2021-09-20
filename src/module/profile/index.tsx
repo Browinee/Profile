@@ -10,7 +10,7 @@ import {
 import {useAuth} from "../auth/context/auth-context";
 import Avatar from "../../components/Avatar";
 import InfoBlock from "./components/InfoBlock";
-import Summary from "./components/SummaryTest";
+import Summary from "./components/Summary";
 import {Button, Divider, Upload} from "antd";
 import Experience from "./components/Experience";
 import {User, Work} from "../../types/user";

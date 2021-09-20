@@ -24,7 +24,7 @@ export const SharedProvider = ({children}: {children: ReactNode}) => {
     useMount(
         useCallback(() => {
             run(bootstrap(id));
-        }, [])
+        }, [id])
     );
     return (
         <SharedContext.Provider
