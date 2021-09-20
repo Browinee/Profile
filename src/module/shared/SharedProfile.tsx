@@ -1,19 +1,25 @@
 import React from "react";
-import {AvatarContainer, Bar, Basic, BasicInfo, Container, WorkExperience} from "../profile/components/styleComponents";
+import {AvatarContainer, Bar, Basic, BasicInfo, WorkExperience} from "../profile/components/styleComponents";
 import FeatureToggle from "../auth/auth";
 import {PERMISSION_MAP} from "../auth/permissionList";
 import Avatar from "../../components/Avatar";
-import {Button, Divider, Upload} from "antd";
-import {UploadOutlined} from "@ant-design/icons";
+import {Divider} from "antd";
 import InfoBlock from "../profile/components/InfoBlock";
 import Summary from "../profile/components/Summary";
 import Experience from "../profile/components/Experience";
 import {useAuth} from "../auth/context/auth-context";
+import styled from "styled-components";
 
+const Container = styled.main`
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    display: flex;
+    position: relative;
+`;
 function SharedProfile() {
     const showBasic = true;
     const {user} = useAuth();
-    console.log("user", user);
     return (
         <Container>
             <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
