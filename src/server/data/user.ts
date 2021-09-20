@@ -16,11 +16,14 @@ export const UserInfo: Omit<User, "token"> = {
     github: "https://github.com/Browinee/",
     summary: SUMMARY,
 };
+// const  loaded = LocalStorageDB.load(SERVER_USER_INFO) || [];
 const persist = () => LocalStorageDB.save(SERVER_USER_INFO, UserInfo);
 
 try {
     persist();
-} catch (error) {}
+} catch (error) {
+    console.log("Load user data error", error);
+}
 
 function validateUserForm({username, password}: AuthForm) {
     if (username !== "admin" || password !== "admin") {

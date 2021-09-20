@@ -11,7 +11,7 @@ const persist = () => LocalStorageDB.save(SERVER_VANITY_INFO, [...defaultVanityU
 try {
     persist();
 } catch (error) {
-    console.log("error", error);
+    console.log("Load vanity url error", error);
 }
 
 export default class VanityUrlDB {
