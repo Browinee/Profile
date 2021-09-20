@@ -40,4 +40,9 @@ export default class UserDB {
         LocalStorageDB.save(SERVER_USER_INFO, JSON.stringify(userInfo));
         return userInfo;
     }
+
+    static async getUserInfo(): Promise<User> {
+        const userInfo = LocalStorageDB.load(SERVER_USER_INFO) as User;
+        return userInfo;
+    }
 }

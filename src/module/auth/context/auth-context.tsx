@@ -1,4 +1,4 @@
-import React, {ReactNode, useCallback, useContext, useMemo} from "react";
+import React, {ReactNode, useCallback, useContext} from "react";
 import {User} from "../../../types/user";
 import {AuthForm} from "../../../types/authForm";
 import useAsync from "../../../hooks/useAsync";
@@ -8,8 +8,7 @@ import LocalStorageDB, {ACCESS_TOKEN, USER_INFO} from "../../../infra/localStora
 import useMount from "../../../hooks/useMount";
 import UpdateUserInfo from "../usecase/updateUserInfo";
 import Loading from "../../../components/Loading";
-import Modal from "../../../components/Modal";
-import {Button} from "antd";
+import http from "../../../infra/http";
 
 interface AuthContextProps {
     user: User | null;
@@ -25,14 +24,11 @@ const AuthContext = React.createContext<AuthContextProps | undefined>(undefined)
 AuthContext.displayName = "AuthContext";
 
 const bootstrapUser = async () => {
-    try {
-        const token = LocalStorageDB.load(ACCESS_TOKEN);
-        const user = LocalStorageDB.load(USER_INFO);
-        /// send request
-        return token ? user : null;
-    } catch (e) {
-        return null;
+    const token = LocalStorageDB.load(ACCESS_TOKEN);
+    if (token) {
+        return http.get("/me") as Promise<User>;
     }
+    return null;
 };
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {

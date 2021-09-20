@@ -36,6 +36,11 @@ const handlers = [
             return res(ctx.status(500), ctx.json({message: e.stack}));
         }
     }),
+    rest.get("/me", async (req: RestRequest<User>, res, ctx) => {
+        await sleep();
+        const userInfo = await UserDB.getUserInfo();
+        return res(ctx.json(userInfo));
+    }),
 ];
 
 export {handlers};
