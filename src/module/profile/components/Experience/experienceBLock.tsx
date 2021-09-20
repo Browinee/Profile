@@ -32,7 +32,7 @@ const Title = styled.div`
     margin-top: 1rem;
 `;
 const Pre = styled.pre`
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     overflow: hidden;
     text-align: left;
     white-space: pre-line;

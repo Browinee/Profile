@@ -13,7 +13,7 @@ interface SummaryProps {
 
 const SummaryList = styled.ul`
     padding: 2rem 1.6rem 0 2rem;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     min-height: 300px;
 
     li {
@@ -22,7 +22,7 @@ const SummaryList = styled.ul`
     }
 `;
 const Header = styled.h1`
-    font-size: 3rem;
+    font-size: 2em;
 `;
 const Summary = (props: SummaryProps) => {
     const {summary, editHandler = () => {}} = props;
