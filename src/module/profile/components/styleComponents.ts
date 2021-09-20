@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {down} from "styled-breakpoints";
 
 export const Container = styled.main`
-    width: 100vw;
+    width: 100%;
     height: calc(100vh - 6rem);
     background: white;
     display: flex;
@@ -10,7 +10,7 @@ export const Container = styled.main`
     position: relative;
 `;
 export const Basic = styled.aside<{showBasic?: boolean}>`
-    width: 30%;
+    width: 300px;
     height: 100%;
     display: flex;
     flex-direction: column;

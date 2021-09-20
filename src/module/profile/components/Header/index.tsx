@@ -17,6 +17,7 @@ const Container = styled.header`
     height: 6rem;
     z-index: 2;
     padding: 1rem 2rem;
+    max-width: 1366px;
 
     > button {
         margin-right: 1rem;

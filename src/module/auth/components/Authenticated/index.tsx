@@ -4,7 +4,8 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import Profile from "../../../profile";
 
 const Container = styled.div`
-    width: 100vw;
+    width: 100%;
+    max-width: 1366px;
     height: 100vh;
 `;
 
