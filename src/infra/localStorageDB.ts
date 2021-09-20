@@ -12,7 +12,7 @@ export default class LocalStorageDB {
 
     static load(key: string): User | null {
         const data = window.localStorage.getItem(key);
-        if (data == null) return data;
+        if (data == null) return null;
         return key === ACCESS_TOKEN ? data : JSON.parse(data);
     }
 

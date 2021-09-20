@@ -8,6 +8,7 @@ const sleep = () =>
     new Promise(resolve => {
         setTimeout(resolve, 500);
     });
+const getToken = (req: any) => req.headers.get("Authorization");
 
 const handlers = [
     rest.post("/login", async (req: RestRequest<AuthForm>, res, ctx) => {
@@ -26,13 +27,18 @@ const handlers = [
     }),
     rest.put("/updateUser", async (req: RestRequest<User>, res: ResponseComposition<any>, ctx) => {
         try {
+            const token = getToken(req);
+            if (!token) {
+                return res(ctx.status(401), ctx.json({message: "A token must be provided. Please login again."}));
+            }
             await sleep();
             const userInfo = req.body;
             const newUserInfo = await UserDB.save(userInfo);
             return res(ctx.status(200), ctx.json(newUserInfo));
         } catch (e: any) {
+            console.log("catch", e);
             // return res(ctx.status(400), ctx.json({message: "Please check param"}));
-            return res(ctx.status(500), ctx.json({message: e.stack}));
+            return res(ctx.status(500), ctx.json({message: e}));
         }
     }),
     rest.get("/me", async (req: RestRequest<User>, res, ctx) => {
