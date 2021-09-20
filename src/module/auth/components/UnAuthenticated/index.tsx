@@ -20,7 +20,6 @@ const UnAuthenticatedApp = () => {
 
     return (
         <Container>
-            <Header />
             <ShadowCard>
                 <Title>Login</Title>
                 {errorMsg ? <Highlight> {errorMsg}</Highlight> : null}
@@ -55,5 +54,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-items: center;
     min-height: 100vh;
 `;
