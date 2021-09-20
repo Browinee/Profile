@@ -5,11 +5,11 @@ import {PERMISSION_MAP} from "../auth/permissionList";
 import Avatar from "../../components/Avatar";
 import {Divider} from "antd";
 import InfoBlock from "../profile/components/InfoBlock";
-import Summary from "../profile/components/Summary";
 import Experience from "../profile/components/Experience";
 import {useAuth} from "../auth/context/auth-context";
 import styled from "styled-components";
 import {SharedProvider} from "./context/shared-context";
+import Summary from "../profile/components/Summary";
 
 const Container = styled.main`
     width: 100vw;
