@@ -9,7 +9,7 @@ import Summary from "../profile/components/Summary";
 import Experience from "../profile/components/Experience";
 import {useAuth} from "../auth/context/auth-context";
 import styled from "styled-components";
-import {useParams} from "react-router";
+import {SharedProvider} from "./context/shared-context";
 
 const Container = styled.main`
     width: 100vw;
@@ -18,28 +18,31 @@ const Container = styled.main`
     display: flex;
     position: relative;
 `;
+
 function SharedProfile() {
     const showBasic = true;
     const {user} = useAuth();
     return (
-        <Container>
-            <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
-                <AvatarContainer className="avatar-container">
-                    <FeatureToggle permissions={[PERMISSION_MAP.AVATAR_VIEW]}>
-                        <Avatar imageUrl={user?.avatar || ""} />
-                    </FeatureToggle>
-                </AvatarContainer>
-                <Bar />
-                <BasicInfo>
-                    <InfoBlock user={user} />
-                </BasicInfo>
-            </Basic>
-            <WorkExperience>
-                <Summary summary={user?.summary || []} />
-                <Divider />
-                <Experience workExperience={user?.workExperience || []} />
-            </WorkExperience>
-        </Container>
+        <SharedProvider>
+            <Container>
+                <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
+                    <AvatarContainer className="avatar-container">
+                        <FeatureToggle permissions={[PERMISSION_MAP.AVATAR_VIEW]}>
+                            <Avatar imageUrl={user?.avatar || ""} />
+                        </FeatureToggle>
+                    </AvatarContainer>
+                    <Bar />
+                    <BasicInfo>
+                        <InfoBlock user={user} />
+                    </BasicInfo>
+                </Basic>
+                <WorkExperience>
+                    <Summary summary={user?.summary || []} />
+                    <Divider />
+                    <Experience workExperience={user?.workExperience || []} />
+                </WorkExperience>
+            </Container>
+        </SharedProvider>
     );
 }
 

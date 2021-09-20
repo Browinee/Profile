@@ -45,3 +45,4 @@ Others:
 2. React.memo different parts
    3.put token in header
 3. error handleing
+4. vanityurl with same url. use new

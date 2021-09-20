@@ -1,12 +1,10 @@
-import React from "react";
+import React, {useCallback, useState} from "react";
 import styled from "styled-components";
 import {useAuth} from "../../../auth/context/auth-context";
-import {Button} from "antd";
+import {Button, Form} from "antd";
 import {down} from "styled-breakpoints";
-
-interface HeaderProps {
-    logout: () => void;
-}
+import Modal from "../../../../components/Modal";
+import VanityUrlForm from "../VanityUrlForm";
 
 const Container = styled.header`
     display: flex;
@@ -19,25 +17,50 @@ const Container = styled.header`
     height: 6rem;
     z-index: 2;
     padding: 1rem 2rem;
+
     > button {
         margin-right: 1rem;
     }
+
     ${down("md")} {
         justify-content: center;
     }
 `;
 
-const Header = (props: HeaderProps) => {
-    const {logout} = props;
+const Header = () => {
+    const {logout, createVanityUrlInfo} = useAuth();
+    const [isModal, setIsModal] = useState(false);
+    const shareLinkHandler = useCallback(() => {
+        setIsModal(true);
+    }, [setIsModal]);
+    const [formRef] = Form.useForm();
+    const confirmHandler = async () => {
+        try {
+            await formRef.validateFields();
+            const value = formRef.getFieldsValue();
+            createVanityUrlInfo(value);
+            setIsModal(false);
+            formRef.resetFields();
+        } catch (e) {}
+    };
+    const cancelHandler = () => {
+        setIsModal(false);
+        formRef.resetFields();
+    };
     return (
         <Container>
             <Button onClick={logout} shape="round">
                 Logout
             </Button>
 
-            <Button onClick={() => {}} shape="round">
+            <Button onClick={shareLinkHandler} shape="round">
                 Share Link
             </Button>
+            {isModal && (
+                <Modal height={250} title={"Share link"} confirmHandler={confirmHandler} cancelHandler={cancelHandler}>
+                    <VanityUrlForm formRef={formRef} />
+                </Modal>
+            )}
         </Container>
     );
 };

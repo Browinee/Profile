@@ -6,10 +6,10 @@ const Container = styled.div`
     align-items: center;
     font-size: 5rem;
 `;
-const UserNotFound = () => (
+const UrlNotFound = () => (
     <Container>
-        <h1>Ooops! This user is not existed</h1>
+        <h1>Ooops! This Url is not existed</h1>
     </Container>
 );
 
-export default UserNotFound;
+export default UrlNotFound;

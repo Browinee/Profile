@@ -68,7 +68,7 @@ function App() {
                     <ResetStyle />
                     <GlobalStyle />
                     {!isShared ? user ? <Authenticated /> : <UnAuthenticatedApp /> : <Shared />}
-                    {isModal && (
+                    {isModal && !isShared && (
                         <Modal
                             height={100}
                             title={isOnline ? "Online" : "Offline"}

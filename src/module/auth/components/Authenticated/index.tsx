@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import {Redirect, Route, Switch} from "react-router-dom";
 import Profile from "../../../profile";
-import Header from "../../../profile/components/Header";
-import {useAuth} from "../../context/auth-context";
 
 const Container = styled.div`
     width: 100vw;
@@ -11,10 +9,8 @@ const Container = styled.div`
 `;
 
 const Authenticated = () => {
-    const {logout} = useAuth();
     return (
         <Container>
-            <Header logout={logout} />
             <Switch>
                 <Route path={"/profile"}>
                     <Profile />

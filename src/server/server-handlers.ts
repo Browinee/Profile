@@ -54,6 +54,10 @@ const handlers = [
     }),
     rest.post("/vanityUrl", async (req: RestRequest<any>, res, ctx) => {
         await sleep();
+        const vanityUrlInfo = req.body;
+        console.log("vanityUrlInfo", vanityUrlInfo);
+        await VanityUrlDB.saveVanityUrlInfo(vanityUrlInfo);
+        return res(ctx.status(200));
     }),
     rest.get("/vanityUrl", async (req: RestRequest<any>, res, ctx) => {
         await sleep();

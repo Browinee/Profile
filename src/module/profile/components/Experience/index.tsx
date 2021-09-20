@@ -41,14 +41,14 @@ const Experience = (props: ExperienceProps) => {
         <Container>
             <Header>
                 Experience
-                <FeatureToggle permissions={[PERMISSION_MAP.SUMMARY_EDIT]}>
+                <FeatureToggle permissions={[PERMISSION_MAP.EXPERIENCE_EDIT]}>
                     <AddContainer onClick={addHandler}>
                         <AddIcon size={14} />
                         <span>Add new experience</span>
                     </AddContainer>
                 </FeatureToggle>
             </Header>
-            <FeatureToggle permissions={[PERMISSION_MAP.SUMMARY_VIEW]}>
+            <FeatureToggle permissions={[PERMISSION_MAP.EXPERIENCE_VIEW]}>
                 {workExperience.map((exp, idx) => {
                     return <ExperienceBLock key={idx} work={exp} clickHandler={editHandler} />;
                 })}

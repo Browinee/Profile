@@ -28,6 +28,7 @@ import ExperienceForm from "./components/Template/Experience";
 import {ArrowRightSVGICON} from "../../components/Aarrow";
 import {breakpoints} from "../../theme/theme";
 import Modal from "../../components/Modal";
+import Header from "./components/Header";
 
 const QUERY = `(max-width: ${breakpoints.md})`;
 
@@ -118,6 +119,7 @@ function Profile() {
     }, [resetError]);
     return (
         <>
+            <Header />
             <Container>
                 <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
                     <AvatarContainer className="avatar-container">

@@ -9,6 +9,8 @@ import useMount from "../../../hooks/useMount";
 import UpdateUserInfo from "../usecase/updateUserInfo";
 import Loading from "../../../components/Loading";
 import http from "../../../infra/http";
+import {VanityUrlProps} from "../../../server/data/vanityUrl";
+import CreateVanityUrlInfo from "../usecase/createVanityUrlInfo";
 
 interface AuthContextProps {
     user: User | null;
@@ -19,6 +21,7 @@ interface AuthContextProps {
     updateUser: (user: User) => void;
     syncUser: () => void;
     resetError: () => void;
+    createVanityUrlInfo: (props: VanityUrlProps) => void;
 }
 
 const AuthContext = React.createContext<AuthContextProps | undefined>(undefined);
@@ -48,6 +51,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
             return run(UpdateUserInfo(userInfo));
         }
     };
+
     const syncUser = () => {
         const userInfo = LocalStorageDB.load(USER_INFO);
         if (userInfo === null) return;
@@ -58,7 +62,10 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
             run(bootstrapUser());
         }, [])
     );
-
+    const {isLoading: isVanityUrlLoading, run: vanityUrlRun} = useAsync<void>();
+    const createVanityUrlInfo = (vanityUrlInfo: VanityUrlProps) => {
+        return vanityUrlRun(CreateVanityUrlInfo(vanityUrlInfo));
+    };
     return (
         <AuthContext.Provider
             value={{
@@ -70,10 +77,11 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
                 updateUser,
                 syncUser,
                 resetError,
+                createVanityUrlInfo,
             }}
         >
             {children}
-            {isLoading && <Loading />}
+            {(isLoading || isVanityUrlLoading) && <Loading />}
         </AuthContext.Provider>
     );
 };

@@ -1,5 +1,3 @@
-import {User} from "../types/user";
-
 export const USER_INFO = "__user_info__";
 export const ACCESS_TOKEN = "__access_token__";
 export const SERVER_USER_INFO = "__server_user_info__";

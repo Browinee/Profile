@@ -22,6 +22,7 @@ const Modal: React.FC<ModalProps> = props => {
             bodyStyle={{overflowX: "auto", height: `${height}px`}}
             footer={footer}
             maskClosable={false}
+            destroyOnClose
         >
             {children}
         </AntdModal>

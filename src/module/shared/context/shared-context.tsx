@@ -3,10 +3,10 @@ import useAsync from "../../../hooks/useAsync";
 import useMount from "../../../hooks/useMount";
 import {VanityUrlProps} from "../../../server/data/vanityUrl";
 import GetVanityUrlInfo from "../usecase/getVanityUrl";
-import {useHistory, useParams} from "react-router";
-import UserNotFound from "../components/UserNotFound";
+import {useParams} from "react-router";
+import UrlNotFound from "../components/UrlNotFound";
 
-interface SharedContextProps {
+export interface SharedContextProps {
     vanityUrlInfo: VanityUrlProps | null;
     isShared: boolean;
 }
@@ -33,7 +33,7 @@ export const SharedProvider = ({children}: {children: ReactNode}) => {
                 isShared: true,
             }}
         >
-            {error && (error as any).status === 404 ? <UserNotFound /> : children}
+            {error && (error as any).status === 404 ? <UrlNotFound /> : children}
         </SharedContext.Provider>
     );
 };
