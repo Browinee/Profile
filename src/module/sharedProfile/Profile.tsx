@@ -1,5 +1,5 @@
-import React from "react";
-import {AvatarContainer, Bar, Basic, BasicInfo, WorkExperience} from "../profile/components/styleComponents";
+import React, {useCallback, useEffect, useState} from "react";
+import {AvatarContainer, Bar, Basic, BasicInfo, StyledSidebarButton, WorkExperience} from "../profile/components/styleComponents";
 import FeatureToggle from "../auth/auth";
 import {PERMISSION_MAP} from "../auth/permissionList";
 import Avatar from "../../components/Avatar";
@@ -10,9 +10,13 @@ import {useAuth} from "../auth/context/auth-context";
 import styled from "styled-components";
 import {SharedProvider} from "./context/shared-context";
 import Summary from "../profile/components/Summary";
+import {ArrowRightSVGICON} from "../../components/Aarrow";
+import useMedia from "../../hooks/useMedia";
+import {QUERY} from "../../constants";
 
 const Container = styled.main`
-    width: 100vw;
+    width: 100%;
+    max-width: 1366px;
     height: 100vh;
     background: white;
     display: flex;
@@ -20,12 +24,19 @@ const Container = styled.main`
 `;
 
 function Profile() {
-    const showBasic = true;
     const {user} = useAuth();
+    const isMatched = useMedia(QUERY);
+    const [isBasic, setIsBasic] = useState(isMatched);
+    const toggleBasic = useCallback(() => {
+        setIsBasic(prev => !prev);
+    }, [setIsBasic]);
+    useEffect(() => {
+        setIsBasic(isMatched);
+    }, [isMatched]);
     return (
         <SharedProvider>
             <Container>
-                <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
+                <Basic className={`${isMatched && isBasic && "closed"}`}>
                     <AvatarContainer className="avatar-container">
                         <FeatureToggle permissions={[PERMISSION_MAP.AVATAR_VIEW]}>
                             <Avatar imageUrl={user?.avatar || ""} />
@@ -41,6 +52,9 @@ function Profile() {
                     <Divider />
                     <Experience workExperience={user?.workExperience || []} />
                 </WorkExperience>
+                <StyledSidebarButton onClick={toggleBasic} showBasic={!isBasic}>
+                    <ArrowRightSVGICON />
+                </StyledSidebarButton>
             </Container>
         </SharedProvider>
     );

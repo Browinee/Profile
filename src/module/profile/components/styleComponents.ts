@@ -9,7 +9,7 @@ export const Container = styled.main`
     margin-top: 6rem;
     position: relative;
 `;
-export const Basic = styled.aside<{showBasic?: boolean}>`
+export const Basic = styled.aside`
     width: 300px;
     height: 100%;
     display: flex;

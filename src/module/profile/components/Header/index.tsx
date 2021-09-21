@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from "react";
 import styled from "styled-components";
 import {useAuth} from "../../../auth/context/auth-context";
-import {Button, Form} from "antd";
+import {Button, Form, notification} from "antd";
 import {down} from "styled-breakpoints";
 import Modal from "../../../../components/Modal";
 import VanityUrlForm from "../VanityUrlForm";
@@ -27,7 +27,7 @@ const Container = styled.header`
         justify-content: center;
     }
 `;
-
+const getSharedLink = (path: string) => `${window.location.origin}/#/shared/${path}`;
 const Header = () => {
     const {logout, createVanityUrlInfo} = useAuth();
     const [isModal, setIsModal] = useState(false);
@@ -42,6 +42,10 @@ const Header = () => {
             createVanityUrlInfo(value);
             setIsModal(false);
             formRef.resetFields();
+            notification.open({
+                message: "Shared Link",
+                description: getSharedLink(value.id),
+            });
         } catch (e) {}
     };
     const cancelHandler = () => {

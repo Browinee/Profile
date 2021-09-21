@@ -3,6 +3,7 @@ import unistar from "../assets/unistar-logo.png";
 import ampos from "../assets/ampos-logo.png";
 import skyrec from "../assets/skyrec.png";
 import {v4 as uuidv4} from "uuid";
+import {breakpoints} from "../theme/theme";
 
 export const WORKEXPERIENCE: Work[] = [
     {
@@ -113,3 +114,5 @@ export const SUMMARY: string[] = [
     "Communicative, practical, problem solving, and passionate about coding and leaning innovative technology.",
     "Others: play nextjs, nests, tailwind, etc in my side projects",
 ];
+
+export const QUERY = `(max-width: ${breakpoints.md})`;

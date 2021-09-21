@@ -26,11 +26,10 @@ import SummaryForm from "./components/Template/Summary";
 import {adapterBasic, adapterSummary} from "./adapter";
 import ExperienceForm from "./components/Template/Experience";
 import {ArrowRightSVGICON} from "../../components/Aarrow";
-import {breakpoints} from "../../theme/theme";
 import Modal from "../../components/Modal";
 import Header from "./components/Header";
-
-const QUERY = `(max-width: ${breakpoints.md})`;
+import useMedia from "../../hooks/useMedia";
+import {QUERY} from "../../constants";
 
 function Profile() {
     const {user, updateUser, errorMsg, resetError} = useAuth();
@@ -95,21 +94,14 @@ function Profile() {
         }
     };
 
-    const [showBasic, setShowBasic] = useState(true);
-    const showBasicHandler = () => {
-        setShowBasic(prev => !prev);
-    };
-    const matchMediaHandler = useCallback(() => {
-        const isMatched = window.matchMedia(QUERY).matches;
-        setShowBasic(!isMatched);
-    }, [setShowBasic]);
+    const isMatched = useMedia(QUERY);
+    const [isBasic, setIsBasic] = useState(isMatched);
+    const toggleBasic = useCallback(() => {
+        setIsBasic(prev => !prev);
+    }, [setIsBasic]);
     useEffect(() => {
-        window.addEventListener("resize", matchMediaHandler);
-        return () => {
-            window.removeEventListener("resize", matchMediaHandler);
-        };
-    }, [matchMediaHandler]);
-
+        setIsBasic(isMatched);
+    }, [isMatched]);
     const errorModalButton = useMemo(() => {
         return (
             <Button type="primary" onClick={resetError}>
@@ -121,7 +113,7 @@ function Profile() {
         <>
             <Header />
             <Container>
-                <Basic showBasic={showBasic} className={`${!showBasic && "closed"}`}>
+                <Basic className={`${isMatched && isBasic && "closed"}`}>
                     <AvatarContainer className="avatar-container">
                         <FeatureToggle permissions={[PERMISSION_MAP.AVATAR_VIEW]}>
                             <Avatar imageUrl={user?.avatar || ""} />
@@ -157,7 +149,7 @@ function Profile() {
                         deleteHandler={onDeleteHandler}
                     />
                 )}
-                <StyledSidebarButton onClick={showBasicHandler} showBasic={showBasic}>
+                <StyledSidebarButton onClick={toggleBasic} showBasic={!isBasic}>
                     <ArrowRightSVGICON />
                 </StyledSidebarButton>
                 {errorMsg && (

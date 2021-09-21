@@ -6,6 +6,7 @@ import {PERMISSION_MAP} from "../../../auth/permissionList";
 interface VanityUrlFormProps {
     formRef: FormInstance;
 }
+
 function VanityUrlForm(props: VanityUrlFormProps) {
     const {formRef} = props;
     const [formValue] = useState<VanityUrlProps[]>([{id: "", permission: []}]);
