@@ -9,8 +9,8 @@ import useMount from "../../../hooks/useMount";
 import UpdateUserInfo from "../usecase/updateUserInfo";
 import Loading from "../../../components/Loading";
 import http from "../../../infra/http";
-import {VanityUrlProps} from "../../../server/data/vanityUrl";
 import CreateVanityUrlInfo from "../usecase/createVanityUrlInfo";
+import {VanityUrlProps} from "../../../types/vanityUrl";
 
 interface AuthContextProps {
     user: User | null;

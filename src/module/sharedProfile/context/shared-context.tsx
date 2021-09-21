@@ -1,10 +1,10 @@
 import React, {ReactNode, useCallback, useContext} from "react";
 import useAsync from "../../../hooks/useAsync";
 import useMount from "../../../hooks/useMount";
-import {VanityUrlProps} from "../../../server/data/vanityUrl";
 import GetVanityUrlInfo from "../usecase/getVanityUrl";
 import {useParams} from "react-router";
 import UrlNotFound from "../components/UrlNotFound";
+import {VanityUrlProps} from "../../../types/vanityUrl";
 
 export interface SharedContextProps {
     vanityUrlInfo: VanityUrlProps | null;

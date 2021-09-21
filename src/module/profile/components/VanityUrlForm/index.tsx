@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Checkbox, Form, FormInstance, Input} from "antd";
-import {VanityUrlProps} from "../../../../server/data/vanityUrl";
 import {PERMISSION_MAP} from "../../../auth/permissionList";
+import {VanityUrlProps} from "../../../../types/vanityUrl";
 
 interface VanityUrlFormProps {
     formRef: FormInstance;

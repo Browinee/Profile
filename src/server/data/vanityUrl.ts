@@ -1,9 +1,5 @@
 import LocalStorageDB, {SERVER_VANITY_INFO} from "../../infra/localStorageDB";
-
-export interface VanityUrlProps {
-    id: string;
-    permission: string[];
-}
+import {VanityUrlProps} from "../../types/vanityUrl";
 
 const defaultVanityUrlInfo: VanityUrlProps[] = [];
 const loaded = LocalStorageDB.load(SERVER_VANITY_INFO) || [];

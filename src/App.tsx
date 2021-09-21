@@ -12,6 +12,7 @@ import Authenticated from "./module/auth/components/Authenticated";
 import Modal from "./components/Modal";
 import {Button, message} from "antd";
 import Shared from "./module/sharedProfile";
+import useOnline from "./hooks/useOnline";
 
 const Container = styled.div`
     width: 100vw;
@@ -30,17 +31,12 @@ function App() {
         return document.location.href.includes("shared");
     });
     const {user, syncUser} = useAuth();
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
     const [isModal, setIsModal] = useState(false);
+    const isOnline = useOnline();
+    useEffect(() => {
+        setIsModal(true);
+    }, [isOnline]);
 
-    const setOnline = useCallback(() => {
-        setIsOnline(true);
-        setIsModal(true);
-    }, []);
-    const setOffline = useCallback(() => {
-        setIsModal(true);
-        setIsOnline(false);
-    }, []);
     const toggleModal = useCallback(() => {
         setIsModal(prev => !prev);
         isOnline &&
@@ -49,15 +45,6 @@ function App() {
             });
     }, [setIsModal, isOnline, syncUser]);
 
-    useEffect(() => {
-        window.addEventListener("offline", setOffline);
-        window.addEventListener("online", setOnline);
-
-        return () => {
-            window.removeEventListener("offline", setOffline);
-            window.removeEventListener("online", setOnline);
-        };
-    }, [setOffline, setOnline]);
     const ModalFooter = useMemo(() => {
         return <Button onClick={toggleModal}>OK</Button>;
     }, [toggleModal]);
