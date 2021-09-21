@@ -65,7 +65,7 @@ const ExperienceBLock = (props: ExperienceBLockProps) => {
     }, [clickHandler, id]);
     return (
         <Card style={{marginBottom: "1rem"}}>
-            <FeatureToggle permissions={[PERMISSION_MAP.SUMMARY_VIEW]}>
+            <FeatureToggle permissions={[PERMISSION_MAP.EXPERIENCE_EDIT]}>
                 <EditorContainer>
                     <EditIcon size={16} openEditModal={editorHandler} />
                 </EditorContainer>
