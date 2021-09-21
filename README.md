@@ -22,7 +22,9 @@ https://profile-six-rho.vercel.app/#/
   - Experience: user can update or remove or add new experience.
 - Vanity url
   - User could create new shared url and give authority on each part.
-  - After creating url, user could enter the url on new tab and see the result.
+    ![image](./img/shareLinkModal.png)
+  - After creating url, user could click link.
+    ![image](./img/sharedlink.png)
 - Authorization/Authentication
   - Login page
   - Feature toggle to control each part(white or back pencil).
@@ -31,8 +33,10 @@ https://profile-six-rho.vercel.app/#/
   ![image](./img/online.png)
   ![image](./img/offline.png)
 - Use msw as backend server and use localstorage as db.
-
-##Setup
+- RWD
+  - one small sreen, basic info would be hidden and user could click gray icon to show.
+    ![image](./img/rwd.png)
+    ##Setup
 
 ```shell
 
