@@ -16,8 +16,8 @@ export const UserInfo: Omit<User, "token"> = {
     github: "https://github.com/Browinee/",
     summary: SUMMARY,
 };
-// const  loaded = LocalStorageDB.load(SERVER_USER_INFO) || [];
-const persist = () => LocalStorageDB.save(SERVER_USER_INFO, UserInfo);
+const loaded = LocalStorageDB.load(SERVER_USER_INFO);
+const persist = () => LocalStorageDB.save(SERVER_USER_INFO, {...UserInfo, ...loaded});
 
 try {
     persist();

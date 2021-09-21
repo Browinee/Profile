@@ -1,4 +1,4 @@
-import React, {Suspense, useCallback, useEffect, useMemo, useState} from "react";
+import React, {Suspense, useCallback, useMemo, useState} from "react";
 import "./App.css";
 import GlobalStyle from "./theme/globalStyles";
 import ResetStyle from "./theme/resestStyles";
