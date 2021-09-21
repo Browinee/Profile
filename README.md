@@ -30,12 +30,14 @@ https://profile-six-rho.vercel.app/#/
   - Feature toggle to control each part(white or back pencil).
     ![image](./img/featureToggle.png)
 - Online/Offline  
-  ![image](./img/online.png)
+   ![image](./img/online.png)
   ![image](./img/offline.png)
 - Use msw as backend server and use localstorage as db.
 - RWD
   - one small sreen, basic info would be hidden and user could click gray icon to show.
     ![image](./img/rwd.png)
+- Coding convention
+  - lint, prettier, husky, commitlint
     ##Setup
 
 ```shell
