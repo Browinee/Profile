@@ -27,7 +27,14 @@ const Container = styled.header`
         justify-content: center;
     }
 `;
-const getSharedLink = (path: string) => `${window.location.origin}/#/shared/${path}`;
+const getSharedLink = (path: string) => {
+    const url = `${window.location.origin}/#/shared/${path}`;
+    return (
+        <a target={"_blank"} href={url} rel="noreferrer">
+            {url}
+        </a>
+    );
+};
 const Header = () => {
     const {logout, createVanityUrlInfo} = useAuth();
     const [isModal, setIsModal] = useState(false);
