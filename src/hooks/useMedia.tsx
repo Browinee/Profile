@@ -6,7 +6,7 @@ const useMedia = (query: string) => {
     const matchMediaHandler = useCallback(() => {
         const matched = window.matchMedia(query).matches;
         setIsMatched(matched);
-    }, [setIsMatched]);
+    }, [setIsMatched, query]);
 
     useEffect(() => {
         window.addEventListener("resize", matchMediaHandler);
