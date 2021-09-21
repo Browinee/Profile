@@ -47,8 +47,6 @@ const ShadowCard = styled(Card)`
 `;
 const Container = styled.div`
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-items: center;
-    min-height: 100vh;
 `;

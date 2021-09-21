@@ -32,10 +32,10 @@ function App() {
     });
     const {user, syncUser} = useAuth();
     const [isModal, setIsModal] = useState(false);
-    const isOnline = useOnline();
-    useEffect(() => {
+    const modalCallback = useCallback(() => {
         setIsModal(true);
-    }, [isOnline]);
+    }, [setIsModal]);
+    const isOnline = useOnline(modalCallback);
 
     const toggleModal = useCallback(() => {
         setIsModal(prev => !prev);

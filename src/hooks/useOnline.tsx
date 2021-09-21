@@ -1,13 +1,15 @@
 import {useCallback, useEffect, useState} from "react";
 
-const useOnline = () => {
+const useOnline = (cb: () => void) => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const setOnline = useCallback(() => {
         setIsOnline(true);
-    }, [setIsOnline]);
+        cb();
+    }, [setIsOnline, cb]);
     const setOffline = useCallback(() => {
+        cb();
         setIsOnline(false);
-    }, [setIsOnline]);
+    }, [setIsOnline, cb]);
     useEffect(() => {
         window.addEventListener("offline", setOffline);
         window.addEventListener("online", setOnline);
