@@ -4,14 +4,17 @@ This is a application about my resume. User should enter username and password t
 After logging in as admin, user can view and modify each part including avatar, basic info
 summary, experience. Also, user could create a share link which is easy to memorize and share.
 
+BTW, I use a duck as avatar because I feel shy putting my avatar online.
+
 ## Demo
 
-https://profile-six-rho.vercel.app/#/profile
+https://profile-six-rho.vercel.app/#/
 
 ## Feature
 
 - Login
-  - dmin/admin with all the authorities
+  - admin/admin with all the authorities
+    ![image](./img/login.png)
 - Profile
   - Admin user has all permissions and can view and edit each part.
   - Avatar: user could upload avatar.
@@ -20,9 +23,14 @@ https://profile-six-rho.vercel.app/#/profile
 - Vanity url
   - User could create new shared url and give authority on each part.
   - After creating url, user could enter the url on new tab and see the result.
-- authorization/authentication
+- Authorization/Authentication
   - Login page
-  - Feature toggle to control each part
+  - Feature toggle to control each part(white or back pencil).
+    ![image](./img/featureToggle.png)
+- Online/Offline  
+  ![image](./img/online.png)
+  ![image](./img/offline.png)
+- Use msw as backend server and use localstorage as db.
 
 ##Setup
 
