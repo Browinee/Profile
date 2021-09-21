@@ -32,7 +32,9 @@ https://profile-six-rho.vercel.app/#/
 - Online/Offline  
    ![image](./img/online.png)
   ![image](./img/offline.png)
-- Use msw as backend server and use localstorage as db.
+- Server
+  - Use msw as backend server and use localstorage as db.
+  - If anything wrong, delete whole localstorage and refresh the page.
 - RWD
   - one small sreen, basic info would be hidden and user could click gray icon to show.
     ![image](./img/rwd.png)
